@@ -1,0 +1,42 @@
+1.5.1
+- added new option to select a siteaccess
+- multilanguage import fixed
+
+1.5
+- support for PHP 4 removed
+- cronjob replaced by a new start-up script
+- HTML import improved
+- PHP tidy extension supported
+- admin interface shows remote ID in the node details
+- admin interface has a new widget to search by remote ID
+- unfortunately I broke the multi-language import
+  (or ezp api changed).
+- dropped the PHP include statements
+- renamed classes to avoid conflicts from ezp autoload
+  generate
+
+1.4
+- create_new_versions flag removed
+- new ImportHandler to NOT create new object versions
+- ability to import content in a given language
+  (sponsored by http://infostrates.com/) 
+- new example for multilanguage import
+- csv image example fixed
+
+1.3
+- post handling improved
+- out of memory issue fixed
+- documentation about how to import HTML
+- MySqlHandler added ( thanks Gunnstein )
+- fromString documentation added ( thanks Bertrand )
+
+1.2
+- minor bug fixes
+- example added for csv import
+
+1.1
+- problem with object relation fixed
+- saving eZ attributes in separate method
+
+1.0
+- initial version

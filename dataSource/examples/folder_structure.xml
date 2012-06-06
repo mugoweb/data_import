@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<all>
+
+	<entry type="folder" id="10">
+		<field name="name">MugoWeb</field>
+		<field name="shortname">Mugo</field>
+		<field name="description">
+		<![CDATA[
+<div class="border-mc">
+            
+<h2>MUGO WEB</h2><p>Based in Vancouver, our 6-person team provides web solutions for clients from around the world. Mugo specializes in eZ Publish, WordPress, and PHP development. We have proven our abilities by developing many high availability, high performance, and high traffic sites with complex functionalities.</p><p> </p>
+<div class="object-center"></div><p>We are trusted by organizations to do critical work. We have done work for:</p>
+<ul>
+	<li>Royal Columbian Hospital</li>
+	<li>Car and Driver</li>
+	<li>Rasmussen Reports</li>
+	<li>WorkSafeBC</li>
+	<li>crowdSPRING</li>
+</ul>
+<p>See our <a href="http://www.mugo.ca/Products">products</a> and <a href="http://www.mugo.ca/Portfolio">portfolio</a> pages for more information on what we've done and who we've helped.</p>
+
+<table>
+	<tr>
+		<td>
+<i>
+Mugo maintains and develops new features for the Rasmussen Reports website, www.rasmussenreports.com. We are impressed with how efficiently they deliver high quality solutions that exactly fit our needs. The Mugo team understands the complexity of our high traffic website and was able to improve our site's overall performance, as well as its search engine rating. For our site's subscribers, Mugo quickly and efficiently developed many new features for our Premium Section.
+
+The Mugo team is great to work with, and I look forward to a long and productive relationship.
+</i>
+		</td>
+		<td>
+<i>
+ 		 We have been using this team for editing, consulting, support and training services in North America for the last 3 years and we still do. The team has shown their expert knowledge of our systems, and is responsive and dedicated. The services they provide include expert consulting on eZ Publish towards large, high-traffic enterprise customers.			
+</i>
+		</td>
+	</tr>
+	<tr>
+		<td>
+Stephen W Smith, Interim CEO, Rasmussen Reports 
+		</td>
+		<td>CEO Aleksander Farstad</td>
+	</tr>
+</table>
+
+</div>
+		]]>
+		</field>
+		<field name="showsubitems">0</field>
+		<field name="publishdate">1/1/1980</field>
+	</entry>
+
+	<entry type="folder" id="20" parent_id="10">
+		<field name="name">Folder for all Articles</field>
+		<field name="shortname">Articles</field>
+		<field name="description">
+		<![CDATA[
+			<table>
+				<tr>
+					<td>1</td>
+				</tr>
+				<tr>
+					<td>2</td>
+				</tr>
+			</table>
+		]]>
+		</field>
+		<field name="showsubitems">1</field>
+		<field name="publishdate">21/2/2007</field>
+	</entry>
+
+	<entry type="folder" id="30" parent_id="10">
+		<field name="name">Folder for all Images</field>
+		<field name="shortname">Images</field>
+		<field name="description">
+		<![CDATA[
+			<ul>
+				<li>1</li>
+				<li>2</li>
+			</ul>
+		]]>
+		</field>
+		<field name="showsubitems">1</field>
+		<field name="publishdate">11/7/2007</field>
+	</entry>
+
+</all>

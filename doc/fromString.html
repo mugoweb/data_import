@@ -1,0 +1,1094 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<title>fromString documentation</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 5196 2007-06-03 20:25:28Z wiemann $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="fromstring-documentation">
+<h1 class="title">fromString documentation</h1>
+
+<div class="contents topic" id="table-of-content">
+<p class="topic-title first">Table of content</p>
+<ul class="simple">
+<li><a class="reference internal" href="#authors" id="id141">Authors</a></li>
+<li><a class="reference internal" href="#binary-file" id="id142">Binary file</a></li>
+<li><a class="reference internal" href="#checkbox" id="id143">Checkbox</a></li>
+<li><a class="reference internal" href="#country" id="id144">Country</a></li>
+<li><a class="reference internal" href="#date" id="id145">Date</a></li>
+<li><a class="reference internal" href="#date-time" id="id146">Date &amp; Time</a></li>
+<li><a class="reference internal" href="#email" id="id147">Email</a></li>
+<li><a class="reference internal" href="#float" id="id148">Float</a></li>
+<li><a class="reference internal" href="#image" id="id149">Image</a></li>
+<li><a class="reference internal" href="#identifier" id="id150">Identifier</a></li>
+<li><a class="reference internal" href="#integer" id="id151">Integer</a></li>
+<li><a class="reference internal" href="#isbn" id="id152">ISBN</a></li>
+<li><a class="reference internal" href="#keyword" id="id153">Keyword</a></li>
+<li><a class="reference internal" href="#matrix" id="id154">Matrix</a></li>
+<li><a class="reference internal" href="#media" id="id155">Media</a></li>
+<li><a class="reference internal" href="#multi-option" id="id156">Multi option</a></li>
+<li><a class="reference internal" href="#multiprice" id="id157">Multiprice</a></li>
+<li><a class="reference internal" href="#object-relation" id="id158">Object relation</a></li>
+<li><a class="reference internal" href="#object-relation-list" id="id159">Object relation list</a></li>
+<li><a class="reference internal" href="#option" id="id160">Option</a></li>
+<li><a class="reference internal" href="#price" id="id161">Price</a></li>
+<li><a class="reference internal" href="#product-category" id="id162">Product category</a></li>
+<li><a class="reference internal" href="#range-option" id="id163">Range option</a></li>
+<li><a class="reference internal" href="#selection" id="id164">Selection</a></li>
+<li><a class="reference internal" href="#subtree-subscription" id="id165">Subtree subscription</a></li>
+<li><a class="reference internal" href="#text-block" id="id166">Text block</a></li>
+<li><a class="reference internal" href="#text-line" id="id167">Text line</a></li>
+<li><a class="reference internal" href="#time" id="id168">Time</a></li>
+<li><a class="reference internal" href="#url" id="id169">URL</a></li>
+<li><a class="reference internal" href="#user-account" id="id170">User account</a></li>
+<li><a class="reference internal" href="#xml-block" id="id171">XML Block</a></li>
+</ul>
+</div>
+<div class="section" id="authors">
+<h1><a class="toc-backref" href="#id141">Authors</a></h1>
+<div class="section" id="data-type-string">
+<h2>data type string</h2>
+<p>ezauthor</p>
+</div>
+<div class="section" id="expected-input">
+<h2>Expected input</h2>
+<p>The authors list, separated by '&amp;'.
+For each author, name email and ID have to  be provided, separated by pipes (|).
+ID can be a numerical value. If -1 is given, the ID will be automatic.</p>
+</div>
+<div class="section" id="example">
+<h2>Example</h2>
+<div class="section" id="input">
+<h3>Input</h3>
+<pre class="literal-block">
+john Doe|john&#64;doe.com|-1&amp;Jane Doe|jane&#64;doe.com|-1
+</pre>
+</div>
+<div class="section" id="result">
+<h3>Result</h3>
+<p>Two authors in the attribute (John Doe, email address <a class="reference external" href="mailto:john&#64;doe.com">john&#64;doe.com</a>,
+and Jane Doe (<a class="reference external" href="mailto:jane&#64;doe.com">jane&#64;doe.com</a>).</p>
+</div>
+</div>
+</div>
+<div class="section" id="binary-file">
+<h1><a class="toc-backref" href="#id142">Binary file</a></h1>
+<div class="section" id="id1">
+<h2>data type string</h2>
+<p>ezbinaryfile</p>
+</div>
+<div class="section" id="id2">
+<h2>Expected input</h2>
+<p>The path to the binary file on disk</p>
+</div>
+<div class="section" id="id3">
+<h2>Example</h2>
+<div class="section" id="id4">
+<h3>Input</h3>
+<pre class="literal-block">
+path/to/my/file.zip
+</pre>
+</div>
+<div class="section" id="id5">
+<h3>Result</h3>
+<p>Uses the file path/to/my/file.zip to initialize the binary file attribute content</p>
+</div>
+</div>
+</div>
+<div class="section" id="checkbox">
+<h1><a class="toc-backref" href="#id143">Checkbox</a></h1>
+<div class="section" id="id6">
+<h2>data type string</h2>
+<p>ezboolean</p>
+</div>
+<div class="section" id="id7">
+<h2>Expected input</h2>
+<p>The boolean value, 0 (not checked) or 1 (checked)</p>
+</div>
+<div class="section" id="id8">
+<h2>Example</h2>
+<div class="section" id="id9">
+<h3>Input</h3>
+<pre class="literal-block">
+0
+</pre>
+</div>
+<div class="section" id="id10">
+<h3>Result</h3>
+<p>An unchecked boolean attribute.</p>
+</div>
+</div>
+</div>
+<div class="section" id="country">
+<h1><a class="toc-backref" href="#id144">Country</a></h1>
+<div class="section" id="id11">
+<h2>data type string</h2>
+<p>ezcountry</p>
+</div>
+<div class="section" id="id12">
+<h2>Expected input</h2>
+<p>A valid country name (see content.ini).</p>
+</div>
+<div class="section" id="id13">
+<h2>Example</h2>
+<div class="section" id="id14">
+<h3>Input</h3>
+<pre class="literal-block">
+France
+</pre>
+</div>
+<div class="section" id="id15">
+<h3>Result</h3>
+<p>The country attribute with France selected.</p>
+</div>
+</div>
+</div>
+<div class="section" id="date">
+<h1><a class="toc-backref" href="#id145">Date</a></h1>
+<div class="section" id="id16">
+<h2>data type string</h2>
+<p>ezdatetype</p>
+</div>
+<div class="section" id="id17">
+<h2>Expected input</h2>
+<p>The date, UNIX timestamp format</p>
+</div>
+<div class="section" id="id18">
+<h2>Example</h2>
+<div class="section" id="id19">
+<h3>Input</h3>
+<pre class="literal-block">
+1216299460
+</pre>
+</div>
+<div class="section" id="id20">
+<h3>Result</h3>
+<p>Will set the date of the attribute to 2008/07/17.</p>
+</div>
+</div>
+</div>
+<div class="section" id="date-time">
+<h1><a class="toc-backref" href="#id146">Date &amp; Time</a></h1>
+<div class="section" id="id21">
+<h2>data type string</h2>
+<p>ezdatetimetype</p>
+</div>
+<div class="section" id="id22">
+<h2>Expected input</h2>
+<p>The date &amp; time, UNIX timestamp format</p>
+</div>
+<div class="section" id="id23">
+<h2>Example</h2>
+<div class="section" id="id24">
+<h3>Input</h3>
+<pre class="literal-block">
+1216299460
+</pre>
+</div>
+<div class="section" id="id25">
+<h3>Result</h3>
+<p>Will set the date &amp; time of the attribute to 2008/07/17 14:57:40</p>
+</div>
+</div>
+</div>
+<div class="section" id="email">
+<h1><a class="toc-backref" href="#id147">Email</a></h1>
+<div class="section" id="id26">
+<h2>data type string</h2>
+<p>ezemail</p>
+</div>
+<div class="section" id="id27">
+<h2>Expected input</h2>
+<p>The email address</p>
+</div>
+<div class="section" id="id28">
+<h2>Example</h2>
+<div class="section" id="id29">
+<h3>Input</h3>
+<pre class="literal-block">
+john&#64;doe.com
+</pre>
+</div>
+</div>
+</div>
+<div class="section" id="float">
+<h1><a class="toc-backref" href="#id148">Float</a></h1>
+<div class="section" id="id30">
+<h2>data type string</h2>
+<p>ezfloat</p>
+</div>
+<div class="section" id="id31">
+<h2>Expected input</h2>
+<p>The float value</p>
+</div>
+<div class="section" id="id32">
+<h2>Example</h2>
+<div class="section" id="id33">
+<h3>Input</h3>
+<pre class="literal-block">
+3.15
+</pre>
+</div>
+</div>
+</div>
+<div class="section" id="image">
+<h1><a class="toc-backref" href="#id149">Image</a></h1>
+<div class="section" id="id34">
+<h2>data type string</h2>
+<p>ezimage</p>
+</div>
+<div class="section" id="id35">
+<h2>Expected input</h2>
+<p>The path to the image file on disk</p>
+</div>
+<div class="section" id="id36">
+<h2>Example</h2>
+<div class="section" id="id37">
+<h3>Input</h3>
+<pre class="literal-block">
+path/to/my/image.jpg
+</pre>
+</div>
+<div class="section" id="id38">
+<h3>Result</h3>
+<p>Uses the file path/to/my/image.jpg to initialize the image content</p>
+</div>
+</div>
+</div>
+<div class="section" id="identifier">
+<h1><a class="toc-backref" href="#id150">Identifier</a></h1>
+<div class="section" id="id39">
+<h2>data type string</h2>
+<p>ezidentifier</p>
+</div>
+<div class="section" id="id40">
+<h2>Expected input</h2>
+<p>The identifier</p>
+</div>
+<div class="section" id="id41">
+<h2>Example</h2>
+<div class="section" id="id42">
+<h3>Input</h3>
+<pre class="literal-block">
+123
+</pre>
+</div>
+</div>
+</div>
+<div class="section" id="integer">
+<h1><a class="toc-backref" href="#id151">Integer</a></h1>
+<div class="section" id="id43">
+<h2>data type string</h2>
+<p>ezinteger</p>
+</div>
+<div class="section" id="id44">
+<h2>Expected input</h2>
+<p>The integer value</p>
+</div>
+<div class="section" id="id45">
+<h2>Example</h2>
+<div class="section" id="id46">
+<h3>Input</h3>
+<pre class="literal-block">
+15
+</pre>
+</div>
+</div>
+</div>
+<div class="section" id="isbn">
+<h1><a class="toc-backref" href="#id152">ISBN</a></h1>
+<div class="section" id="id47">
+<h2>data type string</h2>
+<p>ezisbn</p>
+</div>
+<div class="section" id="id48">
+<h2>Expected input</h2>
+<p>The ISBN</p>
+</div>
+<div class="section" id="id49">
+<h2>Example</h2>
+<div class="section" id="id50">
+<h3>Input</h3>
+<pre class="literal-block">
+013147149X
+</pre>
+</div>
+</div>
+</div>
+<div class="section" id="keyword">
+<h1><a class="toc-backref" href="#id153">Keyword</a></h1>
+<div class="section" id="id51">
+<h2>data type string</h2>
+<p>ezkeyword</p>
+</div>
+<div class="section" id="id52">
+<h2>Expected input</h2>
+<p>The keywords, comma separated</p>
+</div>
+<div class="section" id="id53">
+<h2>Example</h2>
+<div class="section" id="id54">
+<h3>Input</h3>
+<pre class="literal-block">
+ez publish,ezcomponents,opensource,framework
+</pre>
+</div>
+<div class="section" id="id55">
+<h3>Result</h3>
+<p>Will add 4 keywords to the attribute: ez publish, ezcomponents, opensource and framework.</p>
+</div>
+</div>
+</div>
+<div class="section" id="matrix">
+<h1><a class="toc-backref" href="#id154">Matrix</a></h1>
+<div class="section" id="id56">
+<h2>data type string</h2>
+<p>ezmatrix</p>
+</div>
+<div class="section" id="id57">
+<h2>Expected input</h2>
+<p>The rows list, separated by &amp;, and for each row, the cells list, separated by a pipe.
+The matrix class attribute has to match the input data (number of cells). Number of rows is automatic.</p>
+</div>
+<div class="section" id="id58">
+<h2>Example</h2>
+<div class="section" id="id59">
+<h3>Input</h3>
+<pre class="literal-block">
+eZ publish|http://ez.no|eZ components|http://ezcomponents.org
+</pre>
+</div>
+<div class="section" id="id60">
+<h3>Result</h3>
+<p>A matrix with 2 rows &amp; 2 cells. The first row contains &quot;eZ publish&quot; and &quot;<a class="reference external" href="http://ez.no">http://ez.no</a>&quot;,
+and the second one &quot;eZ components&quot; and &quot;<a class="reference external" href="http://ezcomponents.org/">http://ezcomponents.org/</a>&quot;</p>
+</div>
+</div>
+</div>
+<div class="section" id="media">
+<h1><a class="toc-backref" href="#id155">Media</a></h1>
+<div class="section" id="id61">
+<h2>data type string</h2>
+<p>ezmedia</p>
+</div>
+<div class="section" id="id62">
+<h2>Expected input</h2>
+<p>The path to the media file on disk</p>
+</div>
+<div class="section" id="id63">
+<h2>Example</h2>
+<div class="section" id="id64">
+<h3>Input</h3>
+<pre class="literal-block">
+path/to/media.wmv
+</pre>
+</div>
+<div class="section" id="id65">
+<h3>Result</h3>
+<p>The file path/to/media.wmv will be placed in the binary file attribute.</p>
+</div>
+</div>
+</div>
+<div class="section" id="multi-option">
+<h1><a class="toc-backref" href="#id156">Multi option</a></h1>
+<div class="section" id="id66">
+<h2>data type string</h2>
+<p>ezmultioption</p>
+</div>
+<div class="section" id="id67">
+<h2>Expected input</h2>
+<p>First separator is &amp;.
+The first value is the multioption name, and each other '&amp;' separated string is a specific option.</p>
+<p>For each option, elements are separated by a pipe. The first item is the option name,
+the second item the default value, and the next items are option values,
+with each time the option name AND the option price:</p>
+<p>&lt;MultiOptionName&gt;&amp;
+&lt;Option1Name&gt;|&lt;Option1DefaultValue&gt;|&lt;Option1Value1&gt;|&lt;Option1Price1&gt;|&lt;Option1Value2&gt;|&lt;Option1Price2&gt;&amp;
+&lt;Option2Name&gt;|&lt;Option2DefaultValue&gt;|&lt;Option2Value1Name&gt;|&lt;Option2Value1Price&gt;|&lt;Option2Value2Name&gt;|&lt;Option2Value2Price&gt;</p>
+</div>
+<div class="section" id="id68">
+<h2>Example</h2>
+<div class="section" id="id69">
+<h3>Input</h3>
+<pre class="literal-block">
+Cloth option&amp;Color|Red|Red|0|Green|0|Blue|0&amp;Size|M|S|0|M|0|L|2|XL|5|XXL|10
+</pre>
+</div>
+<div class="section" id="id70">
+<h3>Result</h3>
+<p>A multi-option named «&nbsp;Cloth options&nbsp;» with two options: Color and Size.</p>
+<p>Color will have a default value of «&nbsp;Red&nbsp;», and possible options will be Red, Green and Blue, each with a price of 0.
+Size will have a default value of «&nbsp;M&nbsp;», and possible options will be S (price 0), M (price 0), L (price 2), XL (price 5) and XXL (price 10).</p>
+</div>
+</div>
+</div>
+<div class="section" id="multiprice">
+<h1><a class="toc-backref" href="#id157">Multiprice</a></h1>
+<div class="section" id="id71">
+<h2>data type string</h2>
+<p>ezmultiprice</p>
+</div>
+<div class="section" id="id72">
+<h2>Expected input</h2>
+<p>Fields are separated by a pipe.</p>
+<p>The first item is the VAT Type, as a numerical value, starting from 1, as listed
+in the VAT management view.</p>
+<p>The second item is the price type, 1 being inc. VAT, 0 being exc. VAT.</p>
+<p>All subsequent items are grouped by 3, each set being the currency code (EUR, USD...
+matching the values in currency management), the price value, and the price type (AUTO or CUSTOM).</p>
+<p>AUTO prices are NOT computed automatically based on the CUSTOM ones. This can
+easily be performed by calling updateAutoPriceList on the content object's attribute before publishing.</p>
+</div>
+<div class="section" id="id73">
+<h2>Example</h2>
+<div class="section" id="id74">
+<h3>Input</h3>
+<pre class="literal-block">
+2|1|EUR|30|CUSTOM
+</pre>
+</div>
+<div class="section" id="id75">
+<h3>Result</h3>
+<p>The multiprice attribute will be use the 2nd VAT item, and will be inc. VAT.
+The price will be set in Euros, with a price of 30, and a custom value type.
+When auto prices are updated, other AUTO values will be updated correctly.</p>
+</div>
+</div>
+</div>
+<div class="section" id="object-relation">
+<h1><a class="toc-backref" href="#id158">Object relation</a></h1>
+<div class="section" id="id76">
+<h2>data type string</h2>
+<p>ezobjectrelation</p>
+</div>
+<div class="section" id="id77">
+<h2>Expected input</h2>
+<p>Related contentobject's ID</p>
+</div>
+<div class="section" id="id78">
+<h2>Example</h2>
+<div class="section" id="id79">
+<h3>Input</h3>
+<pre class="literal-block">
+55
+</pre>
+</div>
+<div class="section" id="id80">
+<h3>Result</h3>
+<p>A relation to the content object with ID 55.</p>
+</div>
+</div>
+</div>
+<div class="section" id="object-relation-list">
+<h1><a class="toc-backref" href="#id159">Object relation list</a></h1>
+<div class="section" id="id81">
+<h2>data type string</h2>
+<p>ezobjectrelationlist</p>
+</div>
+<div class="section" id="id82">
+<h2>Expected input</h2>
+<p>The list of related objects, separated by a dash.</p>
+</div>
+<div class="section" id="id83">
+<h2>Example</h2>
+<div class="section" id="id84">
+<h3>Input</h3>
+<pre class="literal-block">
+45-78-239
+</pre>
+</div>
+<div class="section" id="id85">
+<h3>Result</h3>
+<p>The attribute will hold relations to objects with IDs 45, 78 and 239.</p>
+</div>
+</div>
+</div>
+<div class="section" id="option">
+<h1><a class="toc-backref" href="#id160">Option</a></h1>
+<div class="section" id="id86">
+<h2>data type string</h2>
+<p>ezoption</p>
+</div>
+<div class="section" id="id87">
+<h2>Expected input</h2>
+<p>The options list, each option with name and price, separated by pipes.</p>
+</div>
+<div class="section" id="id88">
+<h2>Example</h2>
+<div class="section" id="id89">
+<h3>Input</h3>
+<pre class="literal-block">
+Option 1|10|Option 2|20|Option 3|30
+</pre>
+</div>
+<div class="section" id="id90">
+<h3>Result</h3>
+<p>Creates three options: Option 1, price 10, Option 2, price 20 and Option 3, price 30.</p>
+</div>
+</div>
+</div>
+<div class="section" id="price">
+<h1><a class="toc-backref" href="#id161">Price</a></h1>
+<div class="section" id="id91">
+<h2>data type string</h2>
+<p>ezprice</p>
+</div>
+<div class="section" id="id92">
+<h2>Expected input</h2>
+<dl class="docutils">
+<dt>Three items, separated by pipes:</dt>
+<dd><ul class="first last simple">
+<li>the actual price, as a float</li>
+<li>VAT type, as declared in VAT management, starting from 1</li>
+<li>price type, excl. (0) or incl. VAT (1)</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="id93">
+<h2>Example</h2>
+<div class="section" id="id94">
+<h3>Input</h3>
+<dl class="docutils">
+<dt>::</dt>
+<dd>30|1|1</dd>
+</dl>
+</div>
+<div class="section" id="id95">
+<h3>Result</h3>
+<p>A price attribute with the standard VAT (1st one), including VAT (1), and a value
+of 30 XX.</p>
+</div>
+</div>
+</div>
+<div class="section" id="product-category">
+<h1><a class="toc-backref" href="#id162">Product category</a></h1>
+<div class="section" id="id96">
+<h2>data type string</h2>
+<p>ezproductcategory</p>
+</div>
+<div class="section" id="id97">
+<h2>Expected input</h2>
+<p>The category ID and name, separated by a pipe.</p>
+</div>
+<div class="section" id="id98">
+<h2>Example</h2>
+<div class="section" id="id99">
+<h3>Input</h3>
+<dl class="docutils">
+<dt>::</dt>
+<dd>Sex toys|1</dd>
+</dl>
+</div>
+<div class="section" id="id100">
+<h3>Result</h3>
+<p>Will set the product category to the Sex toys category.</p>
+</div>
+</div>
+</div>
+<div class="section" id="range-option">
+<h1><a class="toc-backref" href="#id163">Range option</a></h1>
+<div class="section" id="id101">
+<h2>data type string</h2>
+<p>ezrangeoption</p>
+</div>
+<div class="section" id="id102">
+<h2>Expected input</h2>
+<dl class="docutils">
+<dt>The method expects four items, separated by pipes:</dt>
+<dd><ul class="first last simple">
+<li>The range option name, as a string</li>
+<li>the range option start value, as integer</li>
+<li>the range option end value, as integer</li>
+<li>the range option step value, as integer</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="id103">
+<h2>Example</h2>
+<div class="section" id="id104">
+<h3>Input</h3>
+<pre class="literal-block">
+My range|1|5|1
+</pre>
+</div>
+<div class="section" id="id105">
+<h3>Result</h3>
+<p>A range option named &quot;My range&quot;, going from 1 to 5 by steps of 1.</p>
+</div>
+</div>
+</div>
+<div class="section" id="selection">
+<h1><a class="toc-backref" href="#id164">Selection</a></h1>
+<div class="section" id="id106">
+<h2>data type string</h2>
+<p>ezselection</p>
+</div>
+<div class="section" id="id107">
+<h2>Expected input</h2>
+<p>List of selected items names, separated by a pipe.
+Given values have to be defined for this selection attribute.</p>
+</div>
+<div class="section" id="id108">
+<h2>Example</h2>
+<div class="section" id="id109">
+<h3>Input</h3>
+<pre class="literal-block">
+Value 1|Value 2|Value3
+</pre>
+</div>
+<div class="section" id="id110">
+<h3>Result</h3>
+<p>Selects '''existing''' options named &quot;Value 1&quot;, &quot;Value 2&quot; and &quot;Value 3&quot; for the attribute.</p>
+</div>
+</div>
+</div>
+<div class="section" id="subtree-subscription">
+<h1><a class="toc-backref" href="#id165">Subtree subscription</a></h1>
+<div class="section" id="id111">
+<h2>data type string</h2>
+<p>ezsubtreesubscription</p>
+</div>
+<div class="section" id="id112">
+<h2>Expected input</h2>
+<p>The subtree ID, as an integer</p>
+</div>
+<div class="section" id="id113">
+<h2>Example</h2>
+<div class="section" id="id114">
+<h3>Input</h3>
+<dl class="docutils">
+<dt>::</dt>
+<dd>2</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="text-block">
+<h1><a class="toc-backref" href="#id166">Text block</a></h1>
+<div class="section" id="id115">
+<h2>data type string</h2>
+<p>eztext</p>
+</div>
+<div class="section" id="id116">
+<h2>Expected input</h2>
+<p>The text block, as a string.</p>
+</div>
+<div class="section" id="id117">
+<h2>Example</h2>
+<div class="section" id="id118">
+<h3>Input</h3>
+<pre class="literal-block">
+Nam sed nibh non mi vehicula auctor. Cras mi. Nulla facilisi. Vestibulum enim massa,
+pellentesque at, bibendum laoreet, porta quis, erat. Phasellus non magna ac metus
+imperdiet feugiat. Integer ultricies adipiscing quam? Integer enim? Cras ut neque
+vitae dui porta cursus. Suspendisse consectetuer, pede in cursus malesuada, risus
+tellus consequat.
+</pre>
+</div>
+<div class="section" id="id119">
+<h3>Result</h3>
+<p>The text block.</p>
+</div>
+</div>
+</div>
+<div class="section" id="text-line">
+<h1><a class="toc-backref" href="#id167">Text line</a></h1>
+<div class="section" id="id120">
+<h2>data type string</h2>
+<p>ezstring</p>
+</div>
+<div class="section" id="id121">
+<h2>Expected input</h2>
+<p>The text line</p>
+</div>
+<div class="section" id="id122">
+<h2>Example</h2>
+<div class="section" id="id123">
+<h3>Input</h3>
+<pre class="literal-block">
+This is not a text string
+</pre>
+</div>
+<div class="section" id="id124">
+<h3>Result</h3>
+<p>An ezstring attribute with a value of &quot;This is not a text string&quot;</p>
+</div>
+</div>
+</div>
+<div class="section" id="time">
+<h1><a class="toc-backref" href="#id168">Time</a></h1>
+<div class="section" id="id125">
+<h2>data type string</h2>
+<p>eztime</p>
+</div>
+<div class="section" id="id126">
+<h2>Expected input</h2>
+<p>The time, as a string, hours and minutes separated by a coma.</p>
+</div>
+<div class="section" id="id127">
+<h2>Example</h2>
+<div class="section" id="id128">
+<h3>Input</h3>
+<pre class="literal-block">
+23:59
+</pre>
+</div>
+</div>
+</div>
+<div class="section" id="url">
+<h1><a class="toc-backref" href="#id169">URL</a></h1>
+<div class="section" id="id129">
+<h2>data type string</h2>
+<p>ezurl</p>
+</div>
+<div class="section" id="id130">
+<h2>Expected input</h2>
+<p>Either &lt;url&gt;, or &lt;url&gt;|&lt;url text&gt;</p>
+</div>
+<div class="section" id="id131">
+<h2>Example</h2>
+<div class="section" id="id132">
+<h3>Input</h3>
+<pre class="literal-block">
+http://ez.no
+</pre>
+<p>or</p>
+<pre class="literal-block">
+http://ez.no|eZ systems
+</pre>
+</div>
+<div class="section" id="id133">
+<h3>Result</h3>
+<p>The first Example will input the URL <a class="reference external" href="http://ez.no">http://ez.no</a> with no URL text.
+The second one will input the URL <a class="reference external" href="http://ez.no/">http://ez.no/</a> with the URL text eZ systems.</p>
+</div>
+</div>
+</div>
+<div class="section" id="user-account">
+<h1><a class="toc-backref" href="#id170">User account</a></h1>
+<div class="section" id="id134">
+<h2>data type string</h2>
+<p>ezuseraccount</p>
+</div>
+<div class="section" id="id135">
+<h2>Expected input</h2>
+<dl class="docutils">
+<dt>from two to four items, separated by pipes:</dt>
+<dd><ul class="first last simple">
+<li>login</li>
+<li>email</li>
+<li>password hash (optional)</li>
+<li>password has type, as a string: md5_password, md5_user, md5_site, mysql, plaintext or crypt</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="id136">
+<h2>Example</h2>
+<div class="section" id="id137">
+<h3>Input</h3>
+<pre class="literal-block">
+johndoe|john&#64;doe.com
+</pre>
+</div>
+<div class="section" id="id138">
+<h3>Result</h3>
+<p>Creates a user named johndoe, with the email address <a class="reference external" href="mailto:john&#64;doe.com">john&#64;doe.com</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="xml-block">
+<h1><a class="toc-backref" href="#id171">XML Block</a></h1>
+<div class="section" id="id139">
+<h2>data type string</h2>
+<p>ezxmltext</p>
+</div>
+<div class="section" id="id140">
+<h2>Expected input</h2>
+<p>A proper eZXML document.</p>
+</div>
+</div>
+</div>
+</body>
+</html>

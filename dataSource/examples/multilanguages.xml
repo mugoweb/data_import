@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<all>
+
+	<entry type="folder" id="100" language="eng-GB">
+		<field name="name">Three languages</field>
+		<field name="shortname">Three languages</field>
+		<field name="description">
+		<![CDATA[
+			<p>
+				That's my english translation for this folder.
+			</p>
+		]]>
+		</field>
+		<field name="showsubitems">0</field>
+		<field name="publishdate">1/1/1980</field>
+	</entry>
+
+	<entry type="folder" id="100" language="fre-FR">
+		<field name="name">Trois langues</field>
+		<field name="shortname">Trois langues</field>
+		<field name="description">
+		<![CDATA[
+			<p>
+				C'est ma traduction française pour ce dossier. 
+			</p>
+		]]>
+		</field>
+		<field name="showsubitems">0</field>
+		<field name="publishdate">1/1/1980</field>
+	</entry>
+
+	<entry type="folder" id="100" language="ger-DE">
+		<field name="name">Drei Sprachen</field>
+		<field name="shortname">Drei Sprachen</field>
+		<field name="description">
+		<![CDATA[
+			<p>
+				Dass ist meine deutsche Übersetzung fuer diesen Ordner. 
+			</p>
+		]]>
+		</field>
+		<field name="showsubitems">0</field>
+		<field name="publishdate">1/1/1980</field>
+	</entry>
+
+	<entry type="folder" id="200" language="ger-DE">
+		<field name="name">Zwei Sprachen</field>
+		<field name="shortname">Zwei Sprachen</field>
+		<field name="description">
+		<![CDATA[
+			<p>
+				Dass ist meine deutsche Übersetzung fuer diesen Ordner. 
+			</p>
+		]]>
+		</field>
+		<field name="showsubitems">0</field>
+		<field name="publishdate">1/1/1980</field>
+	</entry>
+
+	<entry type="folder" id="200" language="eng-GB">
+		<field name="name">Two languages</field>
+		<field name="shortname">Two languages</field>
+		<field name="description">
+		<![CDATA[
+			<p>
+				That's my english translation for this folder.
+			</p>
+		]]>
+		</field>
+		<field name="showsubitems">0</field>
+		<field name="publishdate">1/1/1980</field>
+	</entry>
+
+	<entry type="folder" id="300" language="fre-FR">
+		<field name="name">Une langue</field>
+		<field name="shortname">Une langue</field>
+		<field name="description">
+		<![CDATA[
+			<p>
+				C'est ma traduction française pour ce dossier. 
+			</p>
+		]]>
+		</field>
+		<field name="showsubitems">0</field>
+		<field name="publishdate">1/1/1980</field>
+	</entry>
+
+
+</all>

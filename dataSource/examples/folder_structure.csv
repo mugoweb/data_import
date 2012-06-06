@@ -1,0 +1,4 @@
+"id","parent_id","name","shortname","description","showsubitems","publishdate"
+10,,"MugoWeb","Mugo","<b>Mugo Web</b>",0,01/01/80
+20,10,"Folder for all Articles","Articles","<table><tr><td>1</td></tr><tr><td>2</td></tr></table>",1,21/02/07
+30,10,"Folder for all Images","Images","<ul><li>1</li><li>2</li></ul>",1,11/07/07
