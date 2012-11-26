@@ -105,8 +105,12 @@ class ImportOperator
 	 */
 	protected function update_eZ_node( $remoteID, $targetLanguage = null )
 	{
-		//TODO: consider to also update the eZcontentobject attribute values like publish_date, owner, etc
 		$this->cli->output( 'updating ' , false );
+		
+		// update object
+		//TODO: consider to also update the eZcontentobject attribute values like publish_date, owner, etc
+		$stateIds = $this->source_handler->getStateIds();
+		MugoHelpers::updateObjectStates( $this->current_eZ_object, $stateIds );
 		
 		// Create new eZ Publish version for existing eZ Object
 		// TODO - check parent nod id consitence - and create 2nd location if needed
@@ -132,6 +136,7 @@ class ImportOperator
 		$return = false;
 		
 		$targetContentClass = $this->source_handler->getTargetContentClass();
+		$stateIds           = $this->source_handler->getStateIds();
 		
 		$eZObjectAttributes = array_merge(
 				$this->source_handler->getEzObjAttributes(),
@@ -143,7 +148,8 @@ class ImportOperator
 		$eZ_object = MugoHelpers::createEzObject(
 				$eZObjectAttributes,
 				$targetContentClass,
-				$this->source_handler->getParentNodeId()
+				$this->source_handler->getParentNodeId(),
+				$stateIds
 		);
 		
 		if( $eZ_object )

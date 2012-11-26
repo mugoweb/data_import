@@ -45,9 +45,14 @@ class SourceHandler
 		return false;
 	}
 
+	/**
+	 * Get the class attribute identifier for the current field
+	 * 
+	 * @return string
+	 */
 	public function geteZAttributeIdentifierFromField()
 	{
-		return 'eZ Attribute Identifier';
+		return '';
 	}
 
 	/**
@@ -64,6 +69,8 @@ class SourceHandler
 	/*
 	 * You may want to implement a smart logic in order
 	 * to return an existing parent node in your content tree
+	 * 
+	 * @return int
 	 */
 	public function getParentNodeId()
 	{
@@ -72,18 +79,28 @@ class SourceHandler
 
 	/*
 	 * Logic how to build the remote id
+	 * 
+	 * @return string
 	 */
 	public function getDataRowId()
 	{
-		return $this->idPrepend . 'Get id for current row';
+		return $this->idPrepend . 'actual_id_value';
 	}
 
-	function getTargetContentClass()
+	/**
+	 * @return string
+	 */
+	public function getTargetContentClass()
 	{
-		return 'eZ Content Class identifier';
+		return 'folder';
 	}
 
-	function getTargetLanguage()
+	/**
+	 * Language idenfier
+	 * 
+	 * @return string
+	 */
+	public function getTargetLanguage()
 	{
 		return null;
 	}
@@ -97,29 +114,6 @@ class SourceHandler
 	{
 		$this->data = null;
 	}
-
-	function read_file( $location )
-	{
-		$content = '';
-
-		$handle = fopen( $location , 'r');
-		if ( $handle )
-		{
-			while (!feof($handle))
-			{
-				$content .= fgets($handle, 40960);
-			}
-			fclose( $handle );
-		}
-		else
-		{
-			echo 'Could not open file '.$location.'.'."\n";
-			exit;
-		}
-
-		return $content;
-	}
-
 
 	/*
 	 * Method is called after all attributes are saved and
@@ -153,6 +147,16 @@ class SourceHandler
 	 * @return multitype:
 	 */
 	public function getEzObjAttributes()
+	{
+		return array();
+	}
+	
+	/**
+	 * Returns an array of ez publish object state ids.
+	 * 
+	 * @return multitype:
+	 */
+	public function getStateIds()
 	{
 		return array();
 	}

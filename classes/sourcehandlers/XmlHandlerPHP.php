@@ -101,22 +101,28 @@ class XmlHandlerPHP extends SourceHandler
 	
 	function parse_xml_document( $file, $start_xml_tag )
 	{
-		// XML, usually from a file
-		$inXML = $this->read_file( $file );
-		
-		if (!$this->dom = $this->XmlLoader( $inXML ))
-		{
-			die( 'Error while parsing the document'."\n" );
-		}
-		
-		$elements = $this->dom->getElementsByTagName( $start_xml_tag );
+		$inXML = file_get_contents( $file );
 
-		if( !$elements->item(0) )
+		if( $inXML )
 		{
-			die( 'Could not get a starting xml tag. (<'.$start_xml_tag.'>) Or XML DOM structure not valid.' );
+			if (!$this->dom = $this->XmlLoader( $inXML ))
+			{
+				die( 'Error while parsing the document'."\n" );
+			}
+			
+			$elements = $this->dom->getElementsByTagName( $start_xml_tag );
+	
+			if( !$elements->item(0) )
+			{
+				die( 'Could not get a starting xml tag. (<'.$start_xml_tag.'>) Or XML DOM structure not valid.' );
+			}
+			
+			$this->data = $elements->item(0);
 		}
-		
-		$this->data = $elements->item(0);
+		else
+		{
+			die( 'Could not read file: ' . $file );
+		}
 		
 		return true;
 	}

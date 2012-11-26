@@ -171,9 +171,10 @@ class MugoHelpers
 	 * @param array $attributes
 	 * @param string $class_idenfier
 	 * @param int $parent_node_id
+	 * @param array $stateIds
 	 * @return eZContentObject
 	 */
-	public static function createEzObject( array $attributes, $class_idenfier, $parent_node_id )
+	public static function createEzObject( array $attributes, $class_idenfier, $parent_node_id, array $stateIds = null )
 	{
 		$eZ_object = null;
 		
@@ -191,9 +192,10 @@ class MugoHelpers
 					$eZ_object->setAttribute( $key, $value );
 				}
 			}
-
 			$eZ_object->store();
 	
+			self::updateObjectStates( $eZ_object, $stateIds );
+			
 			// Assign object to node
 			$nodeAssignment = eZNodeAssignment::create(
 					array(
@@ -217,7 +219,25 @@ class MugoHelpers
 	
 		return $eZ_object;
 	}
-	
+
+	/**
+	 * @param eZContentObject $eZObj
+	 * @param array $stateIds
+	 * @return boolean
+	 */
+	static public function updateObjectStates( eZContentObject $eZObj, array $stateIds )
+	{
+		if( !empty( $stateIds ) )
+		{
+			foreach( $stateIds as $id )
+			{
+				$state = eZContentObjectState::fetchById( $id );
+				$eZObj->assignState( $state );
+			}
+		}
+		
+		return true;
+	}
 }
 
 ?>
