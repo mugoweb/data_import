@@ -24,8 +24,9 @@ $source_handler_option->shorthelp = "The source handler class name.";
 $params->registerOption( $source_handler_option );
 
 $import_operator_option = new ezcConsoleOption( 'i', 'import_handler', ezcConsoleInput::TYPE_STRING );
-$import_operator_option->mandatory = true;
-$import_operator_option->shorthelp = "The import handler class name.";
+$import_operator_option->mandatory = false;
+$import_operator_option->shorthelp = 'The import handler class name.';
+$import_operator_option->default = 'ImportOperator';
 $params->registerOption( $import_operator_option );
 
 $siteaccess_option = new ezcConsoleOption( 's', 'siteaccess', ezcConsoleInput::TYPE_STRING );

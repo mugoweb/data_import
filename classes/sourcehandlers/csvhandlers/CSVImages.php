@@ -24,7 +24,10 @@ class CSVImages extends csvHandler
 		return self::REMOTE_IDENTIFIER.$this->row[0];
 	}
 
-	function getValueFromField()
+	/* (non-PHPdoc)
+	 * @see csvHandler::getValueFromField()
+	 */
+	public function getValueFromField( eZContentObjectAttribute $contentObjectAttribute )
 	{
 		$value = null;
 		$current_field_index = key( $this->mapping );

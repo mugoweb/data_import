@@ -37,8 +37,10 @@ class XMLImages extends XmlHandlerPHP
 		}
 	}
 	
-	// handles xml fields before storing them in ez publish
-	function getValueFromField()
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getValueFromField()
+	 */
+	public function getValueFromField( eZContentObjectAttribute $contentObjectAttribute )
 	{
 		switch( $this->current_field->getAttribute('name') )
 		{

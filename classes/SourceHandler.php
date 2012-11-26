@@ -1,72 +1,71 @@
 <?php
 
-/*
- * function SourceHandler()
- * function getNextRow()
- * function getNextField()
- * function geteZAttributeIdentifierFromField()
- * function getValueFromField()
- * function getParentNodeId()
- * function getDataRowId()
- * function getTargetContentClass()
- * function readData()
- * function read_file( $location )
- *
+/**
+ * @author pkamps
  *
  */
-
 class SourceHandler
 {
-	var $data;
-	var $current_row;
-	var $current_field;
-	var $idPrepend = 'remoteID_';
-	var $handlerTitle = 'Abstract Handler';
-	var $logger = false;
-	var $db;
-	var $node_priority = false;
-
-	function __construct()
-	{}
+	public $data;
+	public $current_row;
+	public $current_field;
+	public $idPrepend = 'remoteID_';
+	public $handlerTitle = 'Abstract Handler';
 	
-	function getPriorityForNode()
+	public $logger = false;
+	public $db;
+	public $node_priority = false;
+	
+	public function getPriorityForNode()
 	{
 		return $this->node_priority;
 	}
 
-	/*
+	/**
 	 * Gets the next row from object var 'data'
 	 * It may be necessary to implement a point for the data row
 	 * Sets and returns the object var 'current_row'
 	 * Returns false if no more rows are available
+	 * 
+	 * @return NULL
 	 */
-	function getNextRow()
+	public function getNextRow()
 	{
 		$this->current_row = null;
 		return $this->current_row;
 	}
 
-	function getNextField()
+	/**
+	 * // sets the internal point to next field or return false
+	 * 
+	 * @return boolean
+	 */
+	public function getNextField()
 	{
-		// sets the internal point to next field or return false
 		return false;
 	}
 
-	function geteZAttributeIdentifierFromField()
+	public function geteZAttributeIdentifierFromField()
 	{
 		return 'eZ Attribute Identifier';
 	}
 
-	function getValueFromField()
+	/**
+	 * "fromString" value from data source for an eZ Attribute
+	 * 
+	 * @param eZContentObjectAttribute $contentObjectAttribute
+	 * @return string
+	 */
+	public function getValueFromField( eZContentObjectAttribute $contentObjectAttribute )
 	{
-		return 'Value from data source for an eZ Attribute';
+		return ''; 
 	}
 
 	/*
 	 * You may want to implement a smart logic in order
 	 * to return an existing parent node in your content tree
 	 */
-	function getParentNodeId()
+	public function getParentNodeId()
 	{
 		return 2;
 	}
@@ -74,7 +73,7 @@ class SourceHandler
 	/*
 	 * Logic how to build the remote id
 	 */
-	function getDataRowId()
+	public function getDataRowId()
 	{
 		return $this->idPrepend . 'Get id for current row';
 	}
@@ -145,6 +144,17 @@ class SourceHandler
 	function updatePublished($eZ_object)
 	{
 		return false;
+	}
+	
+	/**
+	 * Returns an array of eZContentObject attribute values like
+	 * publish_data, owner etc
+	 * 
+	 * @return multitype:
+	 */
+	public function getEzObjAttributes()
+	{
+		return array();
 	}
 }
 

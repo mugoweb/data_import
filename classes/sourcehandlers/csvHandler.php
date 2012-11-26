@@ -108,10 +108,10 @@ class csvHandler extends SourceHandler
 		return current( $this->mapping );
 	}
 
-	/*
-	 * return the value for the current field
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getValueFromField()
 	 */
-	function getValueFromField()
+	public function getValueFromField( eZContentObjectAttribute $contentObjectAttribute )
 	{
 		return $this->row[ key( $this->mapping ) ];
 	}

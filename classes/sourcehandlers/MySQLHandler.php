@@ -151,13 +151,14 @@ class MySQLHandler extends SourceHandler
         return $this->current_field;
     }
 
-    /*
-     * return the value for the current field
+    /* (non-PHPdoc)
+     * @see SourceHandler::getValueFromField()
      */
-    function getValueFromField()
+    public function getValueFromField( eZContentObjectAttribute $contentObjectAttribute )
     {
         return $this->current_row[ key( $this->mapping ) ];
     }
 
 }
+
 ?>

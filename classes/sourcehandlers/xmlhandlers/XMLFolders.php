@@ -2,18 +2,12 @@
 
 class XMLFolders extends XmlHandlerPHP
 {
-	var $handlerTitle = 'Folders Handler';
-
-	var $current_loc_info = array();
-
-	var $logfile = 'folders_import.log';
-
-	var $remoteID = "";
+	public $handlerTitle = 'Folders Handler';
+	public $current_loc_info = array();
+	public $logfile = 'folders_import.log';
+	public $remoteID = '';
 
 	const REMOTE_IDENTIFIER = 'xmlfolder_';	
-
-	function Folders()
-	{}
 
 	function writeLog( $message, $newlogfile = '')
 	{
@@ -25,8 +19,10 @@ class XMLFolders extends XmlHandlerPHP
 		$this->logger->write( self::REMOTE_IDENTIFIER.$this->current_row->getAttribute('id').': '.$message , $logfile );
 	}
 	
-	// mapping for xml field name to an attribute name in ez publish
-	function geteZAttributeIdentifierFromField()
+	/* (non-PHPdoc)
+	 * @see XmlHandlerPHP::geteZAttributeIdentifierFromField()
+	 */
+	public function geteZAttributeIdentifierFromField()
 	{
 		$field_name = $this->current_field->getAttribute('name');
 		
@@ -46,8 +42,10 @@ class XMLFolders extends XmlHandlerPHP
 		}
 	}
 	
-	// handles xml fields before storing them in ez publish
-	function getValueFromField()
+	/* (non-PHPdoc)
+	 * @see XmlHandlerPHP::getValueFromField()
+	 */
+	public function getValueFromField( eZContentObjectAttribute $contentObjectAttribute )
 	{
 		switch( $this->current_field->getAttribute('name') )
 		{
@@ -93,8 +91,10 @@ class XMLFolders extends XmlHandlerPHP
 		}
 	}
 	
-	// logic where to place the current content node into the content tree
-	function getParentNodeId()
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getParentNodeId()
+	 */
+	public function getParentNodeId()
 	{
 		$parent_id = 2; // fallback is the root node
 		
@@ -113,22 +113,22 @@ class XMLFolders extends XmlHandlerPHP
 		return $parent_id;
 	}
 
-	function getDataRowId()
+	public function getDataRowId()
 	{
 		return self::REMOTE_IDENTIFIER.$this->current_row->getAttribute('id');
 	}
 
-	function getTargetContentClass()
+	public function getTargetContentClass()
 	{
 		return 'folder';
 	}
 
-	function readData()
+	public function readData()
 	{
 		return $this->parse_xml_document( 'extension/data_import/dataSource/examples/folder_structure.xml', 'all' );
 	}
 
-	function post_publish_handling( $eZ_object, $force_exit )
+	public function post_publish_handling( $eZ_object, $force_exit )
 	{
 	    $force_exit = false;		
 		return true;

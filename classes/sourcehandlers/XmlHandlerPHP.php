@@ -1,17 +1,22 @@
 <?php
 
+/**
+ * @author pek
+ *
+ */
 class XmlHandlerPHP extends SourceHandler
 {
-	var $first_row = true;
-	var $first_field = true;
-	var $idPrepend = 'xml_import_';
-	var $handlerTitle = 'Abstract XML Handler';
-	var $source_file;
-	var $dom;
+	public $first_row = true;
+	public $first_field = true;
+	public $idPrepend = 'xml_import_';
+	public $handlerTitle = 'Abstract XML Handler';
+	public $source_file;
+	public $dom;
 
-	function __construct() {}
-
-	function getNextRow()
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getNextRow()
+	 */
+	public function getNextRow()
 	{
 		$this->first_field = true;
 		$this->node_priority = false;
@@ -34,7 +39,10 @@ class XmlHandlerPHP extends SourceHandler
 		return $this->current_row;
 	}
 
-	function getNextField()
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getNextField()
+	 */
+	public function getNextField()
 	{
 		if( $this->first_field )
 		{
@@ -54,14 +62,12 @@ class XmlHandlerPHP extends SourceHandler
 		return $this->current_field;
 	}
 
-	function geteZAttributeIdentifierFromField()
+	/* (non-PHPdoc)
+	 * @see SourceHandler::geteZAttributeIdentifierFromField()
+	 */
+	public function geteZAttributeIdentifierFromField()
 	{
 		return 'eZ Attribute Identifier';
-	}
-
-	function getValueFromField()
-	{
-		return 'my fromString value - see documentation';
 	}
 
 	function post_publish_handling( $eZ_object, $force_exit = false )
@@ -70,7 +76,11 @@ class XmlHandlerPHP extends SourceHandler
 		return true;
 	}
 
-	function getNextValidNode( $node )
+	/**
+	 * @param unknown_type $node
+	 * @return boolean
+	 */
+	protected function getNextValidNode( $node )
 	{
 		$eof = false;
 
