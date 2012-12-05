@@ -29,6 +29,11 @@ $import_operator_option->shorthelp = 'The import handler class name.';
 $import_operator_option->default = 'ImportOperator';
 $params->registerOption( $import_operator_option );
 
+$options_option = new ezcConsoleOption( 'o', 'options', ezcConsoleInput::TYPE_STRING );
+$options_option->mandatory = false;
+$options_option->shorthelp = 'Options string (For example -o foo=bar,foo2=bar2 ).';
+$params->registerOption( $options_option );
+
 $siteaccess_option = new ezcConsoleOption( 's', 'siteaccess', ezcConsoleInput::TYPE_STRING );
 $siteaccess_option->mandatory = false;
 $siteaccess_option->shorthelp = "The siteaccess name.";
@@ -71,14 +76,34 @@ $ezp_script_env->initialize();
 
 $source_handler_id  = $source_handler_option->value;
 $import_operator_id = $import_operator_option->value;
+$options_str        = $options_option->value;
 
-# work with class autoloads or include your classes here
+// Build parameter array from given string
+$parameters = null;
+if( $options_str )
+{
+	$options_parts = explode( ',', $options_str );
 
-$source_handler = new $source_handler_id;
+	if( !empty( $options_parts ) )
+	{
+		foreach( $options_parts as $part )
+		{
+			$i_operation = explode( '=', $part );
+				
+			if( !empty( $i_operation) && count( $i_operation ) == 2 )
+			{
+				$parameters[ $i_operation[0] ] = $i_operation[1];
+			}
+		}
+	}
+}
+
 
 if( class_exists( $source_handler_id ) )
 {
-
+	$source_handler = new $source_handler_id;
+	$source_handler->init( $parameters );
+	
 	if( class_exists( $import_operator_id ) )
 	{
 		$import_operator = new $import_operator_id;
@@ -90,7 +115,6 @@ if( class_exists( $source_handler_id ) )
 	{
 		echo 'Could not get an instance of the import operator ( '. $import_operator_id .' ).' . "\n";
 	}
-
 }
 else
 {

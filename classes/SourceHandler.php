@@ -11,6 +11,7 @@ class SourceHandler
 	public $current_field;
 	public $idPrepend = 'remoteID_';
 	public $handlerTitle = 'Abstract Handler';
+	protected $parameters;
 	
 	public $logger = false;
 	public $db;
@@ -21,6 +22,15 @@ class SourceHandler
 		return $this->node_priority;
 	}
 
+	/**
+	 * @param array $parameters
+	 */
+	public function init( array $parameters )
+	{
+		$this->parameters = $parameters;
+		return $this;
+	}
+	
 	/**
 	 * Gets the next row from object var 'data'
 	 * It may be necessary to implement a point for the data row

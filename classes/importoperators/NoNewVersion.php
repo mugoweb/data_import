@@ -22,6 +22,27 @@ class NoNewVersion extends ImportOperator
 		$this->current_eZ_version = $this->current_eZ_object;
 		return true;
 	}
+
+	/* (non-PHPdoc)
+	 * @see ImportOperator::publish_eZ_node()
+	 */
+	protected function publish_eZ_node( &$force_exit )
+	{
+		if( $this->storeMode == 'create' )
+		{
+			eZOperationHandler::execute(
+					'content',
+					'publish',
+					array(
+							'object_id' => $this->current_eZ_object->attribute( 'id' ),
+							'version'   => $this->current_eZ_version->attribute( 'version' ),
+					)
+			);
+		}
+			
+		return $this->source_handler->post_publish_handling( $this->current_eZ_object, $force_exit );
+	}
+	
 }
 
 ?>

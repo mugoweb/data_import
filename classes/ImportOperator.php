@@ -10,9 +10,13 @@ class ImportOperator
 	public $source_handler;
 	public $current_eZ_object;
 	public $current_eZ_version;
-	public $updated_array;
-	public $do_publish = true;
 	public $cli;
+	
+	/**
+	 * Either "create" or "update" on each row iteration
+	 * @var unknown_type
+	 */
+	public $storeMode;
 
 	/**
 	 * 
@@ -47,26 +51,20 @@ class ImportOperator
 
 			if( !$this->current_eZ_object )
 			{
+				$this->storeMode = 'create';
 				$this->create_eZ_node( $remoteID, $targetContentClass, $targetLanguage );
 			}
 			else
 			{
+				$this->storeMode = 'update';
 				$this->update_eZ_node( $remoteID, $targetLanguage );
 			}
 
 			if( $this->current_eZ_object && $this->current_eZ_version )
 			{
-				$this->save_eZ_node();
-
-				$post_save_success = $this->source_handler->post_save_handling( $this->current_eZ_object, $force_exit );
-
-				if( $post_save_success )
+				if( $this->save_eZ_node() )
 				{
-					$this->publish_eZ_node();
-
-					$post_publish_success = $this->source_handler->post_publish_handling( $this->current_eZ_object, $force_exit );
-					
-					if( $post_publish_success )
+					if( $this->publish_eZ_node() )
 					{
 						$this->setNodesPriority();
 
@@ -99,23 +97,15 @@ class ImportOperator
 	/**
 	 * Create new eZ Publish version for existing eZ Object
 	 * 
-	 * @param int $remoteID
 	 * @param string $targetLanguage
 	 * @return boolean
 	 */
-	protected function update_eZ_node( $remoteID, $targetLanguage = null )
+	protected function update_eZ_node( $targetLanguage = null )
 	{
 		$this->cli->output( 'updating ' , false );
-		
-		// update object
-		//TODO: consider to also update the eZcontentobject attribute values like publish_date, owner, etc
-		$stateIds = $this->source_handler->getStateIds();
-		MugoHelpers::updateObjectStates( $this->current_eZ_object, $stateIds );
-		
+				
 		// Create new eZ Publish version for existing eZ Object
 		// TODO - check parent nod id consitence - and create 2nd location if needed
-		$this->do_publish = true;
-
 		$this->current_eZ_version = $this->current_eZ_object->createNewVersion( false, true, $targetLanguage );
 		
 		return true;
@@ -125,39 +115,30 @@ class ImportOperator
 	/**
 	 * Create new eZ publish object in Database
 	 * 
-	 * @param unknown_type $remoteID
 	 * @param unknown_type $row
 	 * @param unknown_type $targetContentClass
 	 * @param unknown_type $targetLanguage
 	 * @return boolean
 	 */
-	protected function create_eZ_node( $remoteID, $targetContentClass, $targetLanguage = null )
+	protected function create_eZ_node( $targetContentClass, $targetLanguage = null )
 	{
 		$return = false;
 		
 		$targetContentClass = $this->source_handler->getTargetContentClass();
-		$stateIds           = $this->source_handler->getStateIds();
 		
-		$eZObjectAttributes = array_merge(
-				$this->source_handler->getEzObjAttributes(),
-				array('remote_id' => $remoteID )
-		);
-
 		$this->cli->output( 'creating (' . $this->cli->stylize( 'emphasize', $targetContentClass ) . ') ' , false );
 		
 		$eZ_object = MugoHelpers::createEzObject(
-				$eZObjectAttributes,
+				null,
 				$targetContentClass,
-				$this->source_handler->getParentNodeId(),
-				$stateIds
+				$this->source_handler->getParentNodeId()
 		);
 		
 		if( $eZ_object )
 		{
 			$this->current_eZ_object  = $eZ_object;
 			$this->current_eZ_version = $eZ_object->currentVersion();
-							
-			$this->do_publish = true;
+			
 			$return = true;	
 		}
 		else
@@ -168,8 +149,27 @@ class ImportOperator
 		return $return;
 	}
 
-	protected function save_eZ_node()
+	/**
+	 * @param boolean $force_exit
+	 */
+	protected function save_eZ_node( &$force_exit )
 	{
+		// update eZContentObject States
+		$stateIds = $this->source_handler->getStateIds();
+		MugoHelpers::updateObjectStates( $this->current_eZ_object, $stateIds );
+		
+		// set eZContentObject Attributes
+		$eZObjectAttributes = array_merge(
+				$this->source_handler->getEzObjAttributes(),
+				array( 'remote_id' => $this->source_handler->getDataRowId() )
+		);
+		
+		foreach( $eZObjectAttributes as $key => $value )
+		{
+			$this->current_eZ_object->setAttribute( $key, $value );
+		}
+		
+		// update data_map
 		$dataMap  = $this->current_eZ_version->attribute( 'data_map' );
 
 		while( $this->source_handler->getNextField() )
@@ -187,31 +187,34 @@ class ImportOperator
 		}
 		
 		$this->current_eZ_object->store();
+		
+		return $this->source_handler->post_save_handling( $this->current_eZ_object, $force_exit );
 	}
 
 	/**
+	 * @param boolean force_exit
 	 * @return boolean
 	 */
-	protected function publish_eZ_node()
+	protected function publish_eZ_node( &$force_exit )
 	{
-		if( $this->do_publish )
-		{
-			return eZOperationHandler::execute(
-			                                   'content',
-			                                   'publish',
-			                                   array(
-			                                         'object_id' => $this->current_eZ_object->attribute( 'id' ),
-			                                         'version'   => $this->current_eZ_version->attribute( 'version' ),
-			                                        )
-			                                  );
-		}
-		else
-		{
-			return true;
-		}
+		eZOperationHandler::execute(
+		                            'content',
+		                            'publish',
+		                            array(
+		                                  'object_id' => $this->current_eZ_object->attribute( 'id' ),
+		                                  'version'   => $this->current_eZ_version->attribute( 'version' ),
+		                                 )
+		                            );
+
+		return $this->source_handler->post_publish_handling( $this->current_eZ_object, $force_exit );
 	}
 
-	protected function save_eZ_attribute( $contentObjectAttribute )
+	/**
+	 * Fix some missing parts for the fromString method
+	 * 
+	 * @param eZContentObjectAttribute $contentObjectAttribute
+	 */
+	protected function save_eZ_attribute( eZContentObjectAttribute $contentObjectAttribute )
 	{
 		$value = '';
 
