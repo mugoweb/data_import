@@ -1,3 +1,10 @@
+1.x.x (With github I decided to stop doing releases)
+- new command line option to submit values to source handler
+- allow to set eZ Object states
+- allow to update eZ Object attributes (creation date, owner etc)
+- helper function to create a folder structure based on a given path ("/my/folder/structure")
+- PHP5 improvements and more inline documentation
+
 1.5.1
 - added new option to select a siteaccess
 - multilanguage import fixed

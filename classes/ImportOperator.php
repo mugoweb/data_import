@@ -100,7 +100,7 @@ class ImportOperator
 	 * @param string $targetLanguage
 	 * @return boolean
 	 */
-	protected function update_eZ_node( $targetLanguage = null )
+	protected function update_eZ_node( $remoteID, $targetLanguage = null )
 	{
 		$this->cli->output( 'updating ' , false );
 				

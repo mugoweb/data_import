@@ -4,7 +4,7 @@ Data import extension for eZPublish
 Extension : data_import
 Requires  : eZ Publish 4.x.x
 Authors   : Marius Eliassen (me[_at_]ez.no),
-            Philipp Kamps (pek[_at_].ez.no)
+            Philipp Kamps (pkamps[_at_].mugo.ca)
 
 Summary   :
 The purpose of that extension is to import data from a
