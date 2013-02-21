@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<software>
+    <metadata>
+        <name>&lt;a href="http://www.mugo.ca"&gt;Mugo Data Import&lt;/a&gt;</name>
+        <version>1.5</version>
+        <copyright>Copyright (C) 2013 &lt;a href="http://www.mugo.ca"&gt;Mugo Web&lt;/a&gt;</copyright>
+        <license>GNU General Public License v2.0</license>
+    </metadata>
+    <dependencies/>
+</software>
