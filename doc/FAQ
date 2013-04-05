@@ -1,0 +1,76 @@
+1) How to import HTML
+------------------------
+The data import extension allows to import HTML into eZ Publish
+XML Block data types. Therefore the system has to tranlate the
+HTML text into the eZ Publish XML format. For example, it has
+to translate <p>My text here</p> to <paragraph>My text here</paragraph>
+
+To simplify the process, this extensions contains a parser that is
+doing the job for you. But notice that the eZ Publish XML parser for
+XML blocks is very picky. At least it gives concrete error messages
+when a parsing failed.
+
+A working example is in XMLFolders.php:
+
+	$xml_text_parser = new XmlTextParser();
+	$xmltext = $xml_text_parser->Html2XmlText( '<p>My text here</p>' );
+
+So all you need to do is to get an instance of XmlTextParser. The class
+is under data_import/classes/Html2XmlText.php.
+
+In case the parsing failed you can read the error messages like that:
+
+print_r( $xml_text_parser->get_error_messages() );
+
+If the PHP tidy extension is installed the parser will use it and will
+greatly improve the success rate of parsing a given HTML text.
+
+
+
+2) How to import multiple translations
+--------------------------------------------
+The extension allows to import multiple languages per eZ Object.
+
+Try the example to see how it works.
+
+The XML file ( "dataSource/examples/multilanguages.xml" )
+contains multiple entries with the same ID. For example
+it contains 3 entries in 3 different languages but all
+three have the same ID ("100"). Each entry specifies
+the language code in XML ( language="eng-GB" ). Make sure
+that the language code exists in your eZ Publish
+installation -- check "Setup" -> "Languages". The language
+code in the column "Locale" must match the language code
+in the XML file.
+
+Run the example:
+
+prompt> php5 runcronjobs.php import_multilanguages_xml
+
+
+
+3) How to import object relations
+--------------------------------------
+There are two typical scenarios when it comes to import
+object relations. Examples:
+
+i) Article has an object relation to a video
+ii) Article has object relations to other articles
+
+The first scenario is a little easier to handle. Basically
+you just need to make sure to import the video object first.
+When that's done, you'd need to import the articles and in
+case of the object relation attribute on the article, your
+"DataSourceHandler" needs to lookup the video object id and
+store it into the object relation attribute of the article.
+The lookup typically use the remote id (fetchByRemoteId)
+because you explicitly set a remote id for videos in the first
+import.
+
+The 2nd scenario is a bit tricky, because you need a 2-step
+approach. The first import would create all articles without
+the object relations. Then you need an additional script to
+update each article and add the object relation to other
+articles. Again, working with remote ids (fetchByRemoteId) is
+recommended.
+
