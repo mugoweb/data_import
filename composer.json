@@ -1,0 +1,14 @@
+{
+    "name": "mugoweb/data_import",
+    "description": "eZ Publish extension for managing view extras",
+    "type": "ezpublish-legacy-extension",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Philipp Kamps"
+        }
+    ],
+    "require": {
+        "ezsystems/ezpublish-legacy-installer": "*"
+    }
+}
