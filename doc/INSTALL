@@ -1,0 +1,5 @@
+Just do the usual:
+
+- enable the extension in site.ini
+- run "php bin/php/ezpgenerateautoloads.php -e"
+- clear the cache
