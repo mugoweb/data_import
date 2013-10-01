@@ -109,6 +109,8 @@ if( class_exists( $source_handler_id ) )
 		$import_operator = new $import_operator_id;
 
 		$import_operator->source_handler = $source_handler;
+		$source_handler->import_operator = $import_operator;
+		
 		$import_operator->run();
 	}
 	else

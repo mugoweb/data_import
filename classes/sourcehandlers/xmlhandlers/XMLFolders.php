@@ -94,28 +94,14 @@ class XMLFolders extends XmlHandlerPHP
 	/* (non-PHPdoc)
 	 * @see SourceHandler::getParentNodeId()
 	 */
-	public function getParentNodeId()
+	public function getParentRemoteNodeId()
 	{
-		$parent_id = 2; // fallback is the root node
-		
-		$parent_remote_id = $this->current_row->getAttribute('parent_id');
-
-		if( $parent_remote_id )
-		{
-			$eZ_object = eZContentObject::fetchByRemoteID( self::REMOTE_IDENTIFIER.$parent_remote_id );
-
-			if( $eZ_object )
-			{
-				$parent_id = $eZ_object->attribute('main_node_id');
-			}
-		}
-
-		return $parent_id;
+		return self::REMOTE_IDENTIFIER . $this->current_row->getAttribute( 'parent_id' );
 	}
 
 	public function getDataRowId()
 	{
-		return self::REMOTE_IDENTIFIER.$this->current_row->getAttribute('id');
+		return self::REMOTE_IDENTIFIER . $this->current_row->getAttribute('id');
 	}
 
 	public function getTargetContentClass()
@@ -126,12 +112,6 @@ class XMLFolders extends XmlHandlerPHP
 	public function readData()
 	{
 		return $this->parse_xml_document( 'extension/data_import/dataSource/examples/folder_structure.xml', 'all' );
-	}
-
-	public function post_publish_handling( $eZ_object, $force_exit )
-	{
-	    $force_exit = false;		
-		return true;
 	}
 
 }

@@ -1,5 +1,4 @@
 <?php
-include_once( 'extension/data_import/classes/sourcehandlers/csvHandler.php' );
 
 class CSVImages extends csvHandler
 {
@@ -61,24 +60,22 @@ class CSVImages extends csvHandler
 		return $value;
 	}
 	
-	function getParentNodeId()
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getParentNodeId()
+	*/
+	public function getParentRemoteNodeId()
 	{
-		$parent_id = 2; // fallback is the root node
-
-		$eZ_object = eZContentObject::fetchByRemoteID( 'csvfolder_30' );
-
-		if( $eZ_object )
-		{
-			$parent_id = $eZ_object->attribute('main_node_id');
-		}
-
-		return $parent_id;
+		return 'csvfolder_30';
 	}
 	
+	/* (non-PHPdoc)
+	 * @see csvHandler::getTargetContentClass()
+	 */
 	function getTargetContentClass()
 	{
 		return 'image';
 	}
 
 }
+
 ?>

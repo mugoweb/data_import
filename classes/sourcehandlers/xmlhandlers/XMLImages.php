@@ -67,41 +67,37 @@ class XMLImages extends XmlHandlerPHP
 			}
 		}
 	}
-	
-	// logic where to place the current content node into the content tree
-	function getParentNodeId()
+
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getParentNodeId()
+	*/
+	public function getParentRemoteNodeId()
 	{
-		$parent_id = 2; // fallback is the root node
-		
-		$eZ_object = eZContentObject::fetchByRemoteID( 'xmlfolder_30' );
-
-		if( $eZ_object )
-		{
-			$parent_id = $eZ_object->attribute('main_node_id');
-		}
-
-		return $parent_id;
+		return 'xmlfolder_30';
 	}
-
+	
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getDataRowId()
+	 */
 	function getDataRowId()
 	{
 		return self::REMOTE_IDENTIFIER.$this->current_row->getAttribute('id');
 	}
 
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getTargetContentClass()
+	 */
 	function getTargetContentClass()
 	{
 		return 'image';
 	}
 
+	/* (non-PHPdoc)
+	 * @see SourceHandler::readData()
+	 */
 	function readData()
 	{
 		return $this->parse_xml_document( 'extension/data_import/dataSource/examples/images.xml', 'all' );
-	}
-
-	function post_publish_handling( $eZ_object, $force_exit )
-	{
-	    $force_exit = false;		
-		return true;
 	}
 
 }

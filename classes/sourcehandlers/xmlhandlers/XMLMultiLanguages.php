@@ -1,29 +1,28 @@
 <?php
 
+/**
+ * Make sure you have following languages installed in ezp before running this example:
+ * - eng-GB
+ * - fre-FR
+ * - ger-DE
+ * 
+ * @author pek
+ *
+ */
 class XMLMultiLanguages extends XmlHandlerPHP
 {
+	/**
+	 * @var unknown_type
+	 */
 	var $handlerTitle = 'Multi Languages Handler';
 
+	/**
+	 * @var unknown_type
+	 */
 	var $current_loc_info = array();
-
-	var $logfile = 'multilanguages_import.log';
-
-	var $remoteID = "";
 
 	const REMOTE_IDENTIFIER = 'xmlmultilanguage_';	
 
-	function MultiLanguagesHandler()
-	{}
-
-	function writeLog( $message, $newlogfile = '')
-	{
-		if($newlogfile)
-			$logfile = $newlogfile;
-		else
-			$logfile = $this->logfile;
-		
-		$this->logger->write( self::REMOTE_IDENTIFIER.$this->current_row->getAttribute('id').': '.$message , $logfile );
-	}
 	
 	// mapping for xml field name and attribute name in ez publish
 	function geteZAttributeIdentifierFromField()
@@ -32,14 +31,14 @@ class XMLMultiLanguages extends XmlHandlerPHP
 		
 		switch ( $field_name )
 		{
-					case 'shortname':
-						return 'short_name';
-						
-					case 'showsubitems':
-						return 'show_children';
+			case 'shortname':
+				return 'short_name';
+				
+			case 'showsubitems':
+				return 'show_children';
 
-					case 'publishdate':
-						return 'publish_date';
+			case 'publishdate':
+				return 'publish_date';
 						
 			default:
 				return $field_name; 
@@ -76,26 +75,14 @@ class XMLMultiLanguages extends XmlHandlerPHP
 		}
 	}
 	
-	// logic where to place the current content node into the content tree
-	function getParentNodeId()
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getParentRemoteNodeId()
+	 */
+	public function getParentRemoteNodeId()
 	{
-		$parent_id = 2; // fallback is the root node
-		
-		$parent_remote_id = $this->current_row->getAttribute('parent_id');
-
-		if( $parent_remote_id )
-		{
-			$eZ_object = eZContentObject::fetchByRemoteID( self::REMOTE_IDENTIFIER.$parent_remote_id );
-
-			if( $eZ_object )
-			{
-				$parent_id = $eZ_object->attribute('main_node_id');
-			}
-		}
-
-		return $parent_id;
+		return self::REMOTE_IDENTIFIER . $this->current_row->getAttribute( 'parent_id' );
 	}
-
+	
 	function getDataRowId()
 	{
 		return self::REMOTE_IDENTIFIER . $this->current_row->getAttribute('id');
@@ -114,12 +101,6 @@ class XMLMultiLanguages extends XmlHandlerPHP
 	function readData()
 	{
 		return $this->parse_xml_document( 'extension/data_import/dataSource/examples/multilanguages.xml', 'all' );
-	}
-
-	function post_publish_handling( $eZ_object, $force_exit )
-	{
-	    $force_exit = false;		
-		return true;
 	}
 
 }

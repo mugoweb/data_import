@@ -5,7 +5,8 @@ $eZTemplateOperatorArray   = array();
 $eZTemplateOperatorArray[] = array(
 		'class' => 'DataImportTemplateOperators',
 		'operator_names' => array(
-				'to_string'
+				'to_string',
+				'node_serialize'
 ));
   
 ?>

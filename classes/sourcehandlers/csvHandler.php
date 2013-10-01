@@ -73,17 +73,6 @@ class csvHandler extends SourceHandler
 	}
 
 	/*
-	 * don't know what this is for - perhaps if there is something ezp specific
-	 * that needs to happen to the data object - like publishing it?
-	 */
-	function post_publish_handling( $eZ_object, $force_exit = false )
-	{
-		// in case it is necessary
-		//echo "no post-handling today\n\n";
-		return true;
-	}
-
-	/*
 	 * use php array pointers
 	 */
 	function getNextField()

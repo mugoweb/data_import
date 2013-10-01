@@ -12,11 +12,13 @@ given data source (like xml/csv documents) into the eZ
 Publish content tree. This extension is under the GPL.
 
 Concepts :
-We choose a object oririented approach. Developers need to
+We choose a object oriented approach. Developers need to
 implement a SourceHandler that understands the given data
 source. The handler is completely independent from the
 import operators. The import operators contain the logic
-how to create/update the content nodes in eZ Publish.
+how to create/update the content nodes in eZ Publish. For
+simple import operations it is not required to override
+the import operator.
 
 Import Process :
 Each import process starts with an eZ command line script.
@@ -31,16 +33,16 @@ extension - so you can decide if it usefull to you.
  
 - during the install select the ezwebin package
   
-- install this extension
+- install this extension (see doc/INSTALL)
 
 - run 2 example imports
-  prompt> php extension/data_import/scripts/run.php -i ImportOperator -s XMLFolders
-  prompt> php extension/data_import/scripts/run.php -i ImportOperator -s XMLImages
+  prompt> php extension/data_import/scripts/run.php -i ImportOperator -d XMLFolders
+  prompt> php extension/data_import/scripts/run.php -i ImportOperator -d XMLImages
 
 alternatively
 
-  prompt> php extension/data_import/scripts/run.php -i ImportOperator -s CSVFolders
-  prompt> php extension/data_import/scripts/run.php -i ImportOperator -s CSVImages
+  prompt> php extension/data_import/scripts/run.php -i ImportOperator -d CSVFolders
+  prompt> php extension/data_import/scripts/run.php -i ImportOperator -d CSVImages
 
 
 How it works  :

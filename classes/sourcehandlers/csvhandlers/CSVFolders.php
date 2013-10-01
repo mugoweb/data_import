@@ -22,7 +22,7 @@ class CSVFolders extends csvHandler
 	 */
 	function getDataRowId()
 	{
-		return self::REMOTE_IDENTIFIER.$this->row[0];
+		return self::REMOTE_IDENTIFIER . $this->row[0];
 	}
 
 	/* (non-PHPdoc)
@@ -58,25 +58,18 @@ class CSVFolders extends csvHandler
 		return $value;
 	}
 	
-	function getParentNodeId()
-	{
-		$parent_id = 2; // fallback is the root node
-		
-		$parent_remote_id = $this->row[1];
-
-		if( $parent_remote_id )
-		{
-			$eZ_object = eZContentObject::fetchByRemoteID( self::REMOTE_IDENTIFIER.$parent_remote_id );
-
-			if( $eZ_object )
-			{
-				$parent_id = $eZ_object->attribute('main_node_id');
-			}
-		}
-
-		return $parent_id;
-	}
 	
+	/* (non-PHPdoc)
+	 * @see SourceHandler::getParentRemoteNodeId()
+	 */
+	public function getParentRemoteNodeId()
+	{
+		return self::REMOTE_IDENTIFIER . $this->row[1];
+	}
+		
+	/* (non-PHPdoc)
+	 * @see csvHandler::getTargetContentClass()
+	 */
 	function getTargetContentClass()
 	{
 		return 'folder';

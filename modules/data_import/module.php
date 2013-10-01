@@ -15,4 +15,9 @@ $ViewList[ 'exportobject' ] = array(
 		'params' => array( 'contentobject_id' )
 );
 
+$ViewList[ 'exportsubtree' ] = array(
+		'script' => 'exportsubtree.php',
+		'params' => array( 'node_id' )
+);
+
 ?>

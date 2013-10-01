@@ -1,4 +1,10 @@
-1.x.x (With github I decided to stop doing releases)
+2.0
+- new eZXML output format to export existing content nodes
+- new source handler that handles eZXML sources
+- improved handling of node assignments. It handles multiple locations
+and moved nodes.
+
+1.6
 - new command line option to submit values to source handler
 - allow to set eZ Object states
 - allow to update eZ Object attributes (creation date, owner etc)
@@ -10,7 +16,7 @@
 - multilanguage import fixed
 
 1.5
-- support for PHP 4 removed
+- support for PHP 4 dropped
 - cronjob replaced by a new start-up script
 - HTML import improved
 - PHP tidy extension supported

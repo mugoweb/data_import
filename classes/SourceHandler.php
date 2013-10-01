@@ -10,12 +10,25 @@ class SourceHandler
 	public $current_row;
 	public $current_field;
 	public $idPrepend = 'remoteID_';
+	/**
+	 * @var string
+	 */
 	public $handlerTitle = 'Abstract Handler';
 	protected $parameters;
 	
 	public $logger = false;
 	public $db;
 	public $node_priority = false;
+	
+	/**
+	 * @var integer
+	 */
+	protected $fallbackParentNodeId = 2;
+	
+	/**
+	 * @var ImportOperator
+	 */
+	public $import_operator;
 	
 	public function getPriorityForNode()
 	{
@@ -77,17 +90,6 @@ class SourceHandler
 	}
 
 	/*
-	 * You may want to implement a smart logic in order
-	 * to return an existing parent node in your content tree
-	 * 
-	 * @return int
-	 */
-	public function getParentNodeId()
-	{
-		return 2;
-	}
-
-	/*
 	 * Logic how to build the remote id
 	 * 
 	 * @return string
@@ -125,20 +127,26 @@ class SourceHandler
 		$this->data = null;
 	}
 
-	/*
+	/**
 	 * Method is called after all attributes are saved and
 	 * before the node gets published
+	 * 
+	 * @param boolean $force_exit
+	 * @return boolean
 	 */
-	function post_save_handling( $eZ_object, $force_exit )
+	function post_save_handling( &$force_exit )
 	{
 		$force_quit = false;
 		return true;
 	}
 	
-	/*
+	/**
 	 * The method is called after the node was published
+	 * 
+	 * @param boolean $force_exit
+	 * @return boolean
 	 */
-	function post_publish_handling( $eZ_object, $force_exit )
+	function post_publish_handling( &$force_exit )
 	{
 		$force_quit = false;
 		return true;
@@ -169,6 +177,46 @@ class SourceHandler
 	public function getStateIds()
 	{
 		return array();
+	}
+	
+	/**
+	 * Override this method and return an array of node details as DOMElements
+	 * 
+	 * @return multitype:DOMElement 
+	 */
+	public function getDomNodes()
+	{
+		$parent_node = null;
+		
+		$parent_remote_id = $this->getParentRemoteNodeId();
+		
+		if( $parent_remote_id )
+		{
+			$parent_node = eZContentObjectTreeNode::fetchByRemoteID( $parent_remote_id );
+		}
+		
+		//fallback to root node
+		if( !$parent_node )
+		{
+			$parent_node = eZContentObjectTreeNode::fetch( $this->fallbackParentNodeId );
+		}
+		
+		// Create DomNode
+		$xml = '<node-assignment is-main-node="1" remote-id="'. $this->getDataRowId() .'" parent-node-remote-id="'. $parent_node->attribute( 'remote_id' ) .'" />';
+		
+		$dom = new DOMDocument( '1.0', 'utf-8' );
+		$dom->loadXML( $xml );
+		
+		return array( $dom->firstChild );
+	}
+	
+	
+	/**
+	 * @return integer
+	 */
+	protected function getParentRemoteNodeId()
+	{
+		return null;
 	}
 }
 

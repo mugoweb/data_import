@@ -70,12 +70,6 @@ class XmlHandlerPHP extends SourceHandler
 		return 'eZ Attribute Identifier';
 	}
 
-	function post_publish_handling( $eZ_object, $force_exit = false )
-	{
-		// in case it is necessary
-		return true;
-	}
-
 	/**
 	 * @param unknown_type $node
 	 * @return boolean

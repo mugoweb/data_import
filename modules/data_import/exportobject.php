@@ -6,7 +6,7 @@ $ezobj_id = (int)$Params[ 'contentobject_id' ];
 if( $ezobj_id )
 {
 	$ezobj = eZContentObject::fetch( $ezobj_id );
-
+	
 	if( $ezobj )
 	{
 		header( 'Content-Type: application/xml' );

@@ -6,24 +6,40 @@
  */
 class NoNewVersion extends ImportOperator
 {
-	/* (non-PHPdoc)
-	 * @see ImportOperator::update_eZ_node()
+	
+	/**
+	 * @var boolean
 	 */
-	protected function update_eZ_node( $remoteID, $targetLanguage = null )
+	protected $do_publish;
+	
+	
+	/* (non-PHPdoc)
+	 * @see ImportOperator::update_eZ_object()
+	 */
+	protected function update_eZ_object( $remoteID, $targetLanguage = null )
 	{
-		$this->cli->output( 'updating ' , false );
-				
+		$this->cli->output( 'updating, ' , false );
 		$this->do_publish = false;
-		$this->current_eZ_version = $this->current_eZ_object;
+		$this->current_eZ_version = $this->current_eZ_object->attribute( 'current' );
+
 		return true;
 	}
 
+	/* (non-PHPdoc)
+	 * @see ImportOperator::create_eZ_object()
+	 */
+	protected function create_eZ_object( $targetContentClass, $targetLanguage = null )
+	{
+		$this->do_publish = true;
+		return parent::create_eZ_object( $targetContentClass, $targetLanguage );
+	}
+	
 	/* (non-PHPdoc)
 	 * @see ImportOperator::publish_eZ_node()
 	 */
 	protected function publish_eZ_node( &$force_exit )
 	{
-		if( $this->storeMode == 'create' )
+		if( $this->do_publish )
 		{
 			eZOperationHandler::execute(
 					'content',
@@ -35,7 +51,7 @@ class NoNewVersion extends ImportOperator
 			);
 		}
 			
-		return $this->source_handler->post_publish_handling( $this->current_eZ_object, $force_exit );
+		return $this->source_handler->post_publish_handling( $force_exit );
 	}
 	
 }

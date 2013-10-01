@@ -170,20 +170,17 @@ class MugoHelpers
 	/**
 	 * @param array $attributes
 	 * @param string $class_idenfier
-	 * @param int $parent_node_id
-	 * @param array $stateIds
-	 * @return eZContentObject
 	 */
-	public static function createEzObject( array $attributes, $class_idenfier, $parent_node_id, array $stateIds = null )
+	public static function createContentObject( array $attributes, $class_idenfier )
 	{
 		$eZ_object = null;
 		
 		$eZClass = eZContentClass::fetchByIdentifier( $class_idenfier );
-	
+		
 		if( $eZClass )
 		{
 			$eZ_object = $eZClass->instantiate( false, 0, false );
-			
+				
 			//set attributes
 			if( !empty( $attributes ) )
 			{
@@ -193,7 +190,24 @@ class MugoHelpers
 				}
 			}
 			$eZ_object->store();
+		}
+		
+		return $eZ_object;
+	}
 	
+	/**
+	 * @param array $attributes
+	 * @param string $class_idenfier
+	 * @param int $parent_node_id
+	 * @param array $stateIds
+	 * @return eZContentObject
+	 */
+	public static function createContentObjectNode( array $attributes, $class_idenfier, $parent_node_id, array $stateIds = null )
+	{
+		$eZ_object = self::createContentObject( $attributes, $class_idenfier );
+		
+		if( $eZ_object )
+		{
 			self::updateObjectStates( $eZ_object, $stateIds );
 			
 			// Assign object to node
