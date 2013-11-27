@@ -1,6 +1,6 @@
 <?php 
 
-class eZXMLFolders extends eZXML
+class eZXMLFolders extends eZXMLHandlerPHP
 {
 	/* (non-PHPdoc)
 	 * @see SourceHandler::readData()

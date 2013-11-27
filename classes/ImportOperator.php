@@ -57,7 +57,7 @@ class ImportOperator
 			{
 				if( $this->save_eZ_nodes( $force_exit ) )
 				{
-					if( $this->publish_eZ_node() )
+					if( $this->publish_eZ_node( $force_exit ) )
 					{
 						$this->cli->output( 'done] ' . $this->cli->stylize( 'green', 'object ID ( '. $this->current_eZ_object->attribute( 'id' ) . ' )' . ".\n" ), false );
 					}
@@ -179,7 +179,7 @@ class ImportOperator
 		
 		$targetContentClass = $this->source_handler->getTargetContentClass();
 		
-		$eZ_object = MugoHelpers::createContentObject( null, $targetContentClass );
+		$eZ_object = MugoHelpers::createContentObject( array(), $targetContentClass );
 		
 		if( $eZ_object )
 		{

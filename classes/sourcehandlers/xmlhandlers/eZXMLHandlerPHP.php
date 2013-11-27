@@ -1,6 +1,6 @@
 <?php
 
-class eZXML extends XmlHandlerPHP
+class eZXMLHandlerPHP extends XmlHandlerPHP
 {
 	/**
 	 * @var string

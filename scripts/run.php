@@ -79,7 +79,7 @@ $import_operator_id = $import_operator_option->value;
 $options_str        = $options_option->value;
 
 // Build parameter array from given string
-$parameters = null;
+$parameters = array();
 if( $options_str )
 {
 	$options_parts = explode( ',', $options_str );
