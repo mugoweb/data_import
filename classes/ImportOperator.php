@@ -412,6 +412,21 @@ class ImportOperator
 			}
 			break;
 			
+			// fromString cannot handle an empty string - it's not removing the image
+			case 'ezimage':
+			{
+				$value = $this->source_handler->getValueFromField( $contentObjectAttribute );
+				$parts = explode( '|', $value );
+				
+				// empty filename - let's remove it and we're done
+				if( !$parts[ 0 ] )
+				{
+					eZImageType::deleteStoredObjectAttribute( $contentObjectAttribute, true );
+					return true;
+				}
+			}
+			break;
+			
 			default:
 				$value = $this->source_handler->getValueFromField( $contentObjectAttribute );
 		}
@@ -420,6 +435,8 @@ class ImportOperator
 		// create a bug report for that
 		$contentObjectAttribute->fromString( $value );
 		$contentObjectAttribute->store();
+		
+		return true;
 	}
 }
 

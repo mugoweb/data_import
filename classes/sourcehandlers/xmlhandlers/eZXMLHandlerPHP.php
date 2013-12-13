@@ -10,15 +10,10 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 	/**
 	 * Used to temporarily store image data
 	 * 
-	 * @var string
+	 * @var array
 	 */
-	protected $tmpFile;
-	
-	public function __construct()
-	{
-		$this->tmpFile = sys_get_temp_dir() .'/'. uniqid( 'data_import' );
-	}
-	
+	protected $tmpFiles;
+		
 	/* (non-PHPdoc)
 	 * @see XmlHandlerPHP::getNextField()
 	 */
@@ -74,22 +69,15 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 			// create a temp copy of the remote file to local FS
 			case 'ezimage':
 			{
-				if( $this->current_field->nodeValue != '' )
+				$parts = explode( '|', str_replace( '&amp;', '&', $this->current_field->nodeValue ) );
+				$filename = $parts[ 0 ];
+				
+				if( $filename )
 				{
-					$parts = explode( '|', str_replace( '&amp;', '&', $this->current_field->nodeValue ) );
-					$filename = $parts[ 0 ];
-					
-					if( $filename )
-					{
-						$filename = $this->copyRemoteFileToLocalTemp( $filename );
-					}
-					
-					return $filename . '|' . $parts[ 1 ];
+					$filename = $this->copyRemoteFileToLocalTemp( $filename );
 				}
-				else
-				{
-					return '';
-				}
+				
+				return $filename . '|' . $parts[ 1 ];
 			}
 			break;
 			
@@ -142,11 +130,11 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 	/**
 	 * @param string $uri
 	 * @param array $info
-	 * @return mixed
+	 * @return string
 	 */
 	protected function copyRemoteFileToLocalTemp( $uri )
 	{
-		$return = null;
+		$return = '';
 
 		$ch = curl_init();
 
@@ -172,12 +160,35 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 
 		if( $content )
 		{
-			$return = $this->tmpFile;
+			// Assuming ezp image alias URLs
+			$uriParts = expode( '/', $uri );
+			$fileName = array_pop( $uriParts );
+			
+			$return = sys_get_temp_dir() . '/' . $fileName;
+
+			// store reference to remove the file later
+			$this->tmpFiles[] = $return;
+			
 			file_put_contents( $return, $content );
 		}
 
 		return $return;
 	}
+	
+	function post_publish_handling( &$force_exit )
+	{
+		if( !empty( $this->tmpFiles ) )
+		{
+			foreach( $this->tmpFiles as $file )
+			{
+				unlink( $file );
+			}
+		}
+		
+		$force_quit = false;
+		return true;
+	}
+	
 }
 
 ?>
