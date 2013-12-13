@@ -1,6 +1,6 @@
 <?php
 
-class eZXML extends XmlHandlerPHP
+class eZXMLHandlerPHP extends XmlHandlerPHP
 {
 	/**
 	 * @var string
@@ -74,15 +74,22 @@ class eZXML extends XmlHandlerPHP
 			// create a temp copy of the remote file to local FS
 			case 'ezimage':
 			{
-				$parts = explode( '|', str_replace( '&amp;', '&', $this->current_field->nodeValue ) );
-				$filename = $parts[ 0 ];
-				
-				if( $filename )
+				if( $this->current_field->nodeValue != '' )
 				{
-					$filename = $this->copyRemoteFileToLocalTemp( $filename );
+					$parts = explode( '|', str_replace( '&amp;', '&', $this->current_field->nodeValue ) );
+					$filename = $parts[ 0 ];
+					
+					if( $filename )
+					{
+						$filename = $this->copyRemoteFileToLocalTemp( $filename );
+					}
+					
+					return $filename . '|' . $parts[ 1 ];
 				}
-				
-				return $filename . '|' . $parts[ 1 ];
+				else
+				{
+					return '';
+				}
 			}
 			break;
 			
