@@ -161,7 +161,7 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 		if( $content )
 		{
 			// Assuming ezp image alias URLs
-			$uriParts = expode( '/', $uri );
+			$uriParts = explode( '/', $uri );
 			$fileName = array_pop( $uriParts );
 			
 			$return = sys_get_temp_dir() . '/' . $fileName;
