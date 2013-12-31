@@ -3,6 +3,7 @@
 - new source handler that handles eZXML sources
 - improved handling of node assignments. It handles multiple locations
 and moved nodes.
+- generic CSV export for objects and attributes
 
 1.6
 - new command line option to submit values to source handler

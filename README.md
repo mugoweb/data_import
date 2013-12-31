@@ -77,7 +77,7 @@ you import a CSV file a second time the import Operator will recognize
 the existing remote ids in eZ Publish and instead of creating new
 nodes it will update your previously imported nodes. That also works
 if the node got moved to a different location or is in the trash. It
-still has the same remote id and therefor gets recognized by the
+still has the same remote id and therefore gets recognized by the
 ImportOperator.
 
 The location where to place imported nodes only get during the creation
@@ -87,12 +87,12 @@ to return an existing node id for the parent node id. That can be a newly
 created node that was created by a previous line in your CSV file. So order
 matters here. Your CVS file should create potential parent nodes first.
 In case the ImportOperator recognizes the remote id - it will only update
-the node content - it is not calling the "getParentNodeId" at all and therefor
+the node content - it is not calling the "getParentNodeId" at all and therefore
 is not able to move existing nodes. You would need to use a different
-ImportOperator in order to support that szenario.
+ImportOperator in order to support that scenario.
 
 In order to import the content in eZ Publish attributes the ImportOperator
 is using the API method "fromString". That method is implemented for all
-standard eZ Publish Datatype attributes. For custom datatype you need to check
+standard eZ Publish datatypes. For custom datatype you need to check
 if it has an implementation for the "fromString" method before using the
 data import extension with the custom datatype.
