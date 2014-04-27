@@ -190,18 +190,18 @@ class SourceHandler
 		
 		$parent_remote_id = $this->getParentRemoteNodeId();
 		
-		 if ($parent_remote_id)
-                                      {
-                                               $parent_node = eZContentObjectTreeNode::fetchByRemoteID($parent_remote_id);
-                                      }
-                                      else
-                                      {
-                                               $parent_id = $this->getParentNodeId();
-                                               if ($parent_id)
-                                               {
-                                                        $parent_node = eZContentObjectTreeNode::fetch($parent_id);
-                                               }
-                                     }
+		if ($parent_remote_id)
+                {
+                	$parent_node = eZContentObjectTreeNode::fetchByRemoteID($parent_remote_id);
+                }
+                else
+                {
+                	$parent_id = $this->getParentNodeId();
+		        if ($parent_id)
+                	{
+		                $parent_node = eZContentObjectTreeNode::fetch($parent_id);
+		        }
+                }
 		
 		//fallback to root node
 		if( !$parent_node )
@@ -227,19 +227,19 @@ class SourceHandler
 		return null;
 	}
         
-                   /*
-                    * @return mixed - either a parent node id
-                    */
+        /**
+         * @return mixed - either a parent node id or false
+         */
 
-                   function getParentNodeId()
-                   {
-                            if (isset($this->parameters['parentID']) && !empty($this->parameters['parentID']))
-                            {
-                                      return $this->parameters['parentID'];
-                            }
+        function getParentNodeId()
+        {
+        	if (isset($this->parameters['parentID']) && !empty($this->parameters['parentID']))
+	        {
+        		return $this->parameters['parentID'];
+	        }
 
-                            return false;
-                   }
+        	return false;
+        }
 }
 
 ?>
