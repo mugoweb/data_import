@@ -61,11 +61,11 @@ class CSVImages extends csvHandler
 	}
 	
 	/* (non-PHPdoc)
-	 * @see SourceHandler::getParentNodeId()
+	 * @see SourceHandler::getParentNode()
 	*/
-	public function getParentRemoteNodeId()
+	public function getParentNode()
 	{
-		return 'csvfolder_30';
+		return eZContentObjectTreeNode::fetchByRemoteID( 'csvfolder_30' );
 	}
 	
 	/* (non-PHPdoc)

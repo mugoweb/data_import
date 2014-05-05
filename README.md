@@ -80,16 +80,16 @@ if the node got moved to a different location or is in the trash. It
 still has the same remote id and therefore gets recognized by the
 ImportOperator.
 
-The location where to place imported nodes only get during the creation
-process. So if you create new nodes with new remote ids the ImportOperator
-is calling the method "getParentNodeId" in your source handler. You have
-to return an existing node id for the parent node id. That can be a newly
-created node that was created by a previous line in your CSV file. So order
-matters here. Your CVS file should create potential parent nodes first.
+When creating new content objects the node location needs to be determent:
+if you create new nodes with new remote ids the ImportOperator
+is calling the method "getParentNode" in your source handler. You have
+to return an existing node being the parent node for the new node. That can
+be a newly created node that was created by a previous line in your CSV file.
+So order matters here. Your CVS file should create potential parent nodes first.
 In case the ImportOperator recognizes the remote id - it will only update
-the node content - it is not calling the "getParentNodeId" at all and therefore
+the node content - it is not calling the "getParentNode" at all and therefor
 is not able to move existing nodes. You would need to use a different
-ImportOperator in order to support that scenario.
+ImportOperator in order to support that szenario.
 
 In order to import the content in eZ Publish attributes the ImportOperator
 is using the API method "fromString". That method is implemented for all

@@ -76,11 +76,12 @@ class XMLMultiLanguages extends XmlHandlerPHP
 	}
 	
 	/* (non-PHPdoc)
-	 * @see SourceHandler::getParentRemoteNodeId()
+	 * @see SourceHandler::getParentNode()
 	 */
-	public function getParentRemoteNodeId()
+	public function getParentNode()
 	{
-		return self::REMOTE_IDENTIFIER . $this->current_row->getAttribute( 'parent_id' );
+		$id = self::REMOTE_IDENTIFIER . $this->current_row->getAttribute( 'parent_id' );
+		return eZContentObjectTreeNode::fetchByRemoteID( $id );
 	}
 	
 	function getDataRowId()
@@ -104,5 +105,3 @@ class XMLMultiLanguages extends XmlHandlerPHP
 	}
 
 }
-
-?>

@@ -28,14 +28,14 @@ class XMLFolders extends XmlHandlerPHP
 		
 		switch ( $field_name )
 		{
-					case 'shortname':
-						return 'short_name';
-						
-					case 'showsubitems':
-						return 'show_children';
+			case 'shortname':
+				return 'short_name';
 
-					case 'publishdate':
-						return 'publish_date';
+			case 'showsubitems':
+				return 'show_children';
+
+			case 'publishdate':
+				return 'publish_date';
 						
 			default:
 				return $field_name; 
@@ -92,11 +92,12 @@ class XMLFolders extends XmlHandlerPHP
 	}
 	
 	/* (non-PHPdoc)
-	 * @see SourceHandler::getParentNodeId()
+	 * @see SourceHandler::getParentNode()
 	 */
-	public function getParentRemoteNodeId()
+	public function getParentNoded()
 	{
-		return self::REMOTE_IDENTIFIER . $this->current_row->getAttribute( 'parent_id' );
+		$id = self::REMOTE_IDENTIFIER . $this->current_row->getAttribute( 'parent_id' );
+		return eZContentObjectTreeNode::fetchByRemoteID( $id );
 	}
 
 	public function getDataRowId()

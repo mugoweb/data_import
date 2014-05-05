@@ -88,9 +88,6 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 		}
 	}
 	
-	/* (non-PHPdoc)
-	 * @see SourceHandler::getParentNodeId()
-	 */
 	public function getDomNodes()
 	{
 		$return = array();
@@ -190,5 +187,3 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 	}
 	
 }
-
-?>

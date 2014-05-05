@@ -45,11 +45,6 @@ class csvHandler extends SourceHandler
 		return 'prefix_'.'id';
 	}
 
-	function getParentNodeId()
-	{
-		return 2;
-	}
-
 	/*
 	 * use the file handler to navigate in the CSV file
 	 */

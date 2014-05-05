@@ -80,11 +80,6 @@ class MySQLHandler extends SourceHandler
         return $this->idPrepend . $this->current_row_hash['id'];
     }
 
-    function getParentNodeId()
-    {
-        return 2;
-    }
-
     /*
      * Get next row from the table
      */

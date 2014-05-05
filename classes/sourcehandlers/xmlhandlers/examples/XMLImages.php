@@ -69,11 +69,11 @@ class XMLImages extends XmlHandlerPHP
 	}
 
 	/* (non-PHPdoc)
-	 * @see SourceHandler::getParentNodeId()
+	 * @see SourceHandler::getParentNode()
 	*/
-	public function getParentRemoteNodeId()
+	public function getParentNode()
 	{
-		return 'xmlfolder_30';
+		return eZContentObjectTreeNode::fetchByRemoteID( 'xmlfolder_30' );
 	}
 	
 	/* (non-PHPdoc)

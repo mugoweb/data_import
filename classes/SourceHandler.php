@@ -19,7 +19,7 @@ class SourceHandler
 	public $logger = false;
 	public $db;
 	public $node_priority = false;
-	
+		
 	/**
 	 * @var integer
 	 */
@@ -153,7 +153,7 @@ class SourceHandler
 	}
 
 	
-	function updatePublished($eZ_object)
+	function updatePublished( $eZ_object )
 	{
 		return false;
 	}
@@ -186,38 +186,40 @@ class SourceHandler
 	 */
 	public function getDomNodes()
 	{
-		$parent_node = null;
+		$parent_node = $this->getParentNode();
 		
-		$parent_remote_id = $this->getParentRemoteNodeId();
-		
-		if( $parent_remote_id )
-		{
-			$parent_node = eZContentObjectTreeNode::fetchByRemoteID( $parent_remote_id );
-		}
-		
-		//fallback to root node
-		if( !$parent_node )
+		// Fallback node
+		if( !( $parent_node instanceof eZContentObjectTreeNode ) )
 		{
 			$parent_node = eZContentObjectTreeNode::fetch( $this->fallbackParentNodeId );
 		}
-		
+
 		// Create DomNode
 		$xml = '<node-assignment is-main-node="1" remote-id="'. $this->getDataRowId() .'" parent-node-remote-id="'. $parent_node->attribute( 'remote_id' ) .'" />';
-		
+
 		$dom = new DOMDocument( '1.0', 'utf-8' );
 		$dom->loadXML( $xml );
-		
+
 		return array( $dom->firstChild );
 	}
 	
 	
 	/**
-	 * @return integer
+	 * Override this method and implement you own logic how to get the parent node.
+	 * In most cases, you want to read a node (or remote id) from the source file.
+	 * 
+	 * @return eZContentObjectTreeNode
 	 */
-	protected function getParentRemoteNodeId()
+	protected function getParentNode()
 	{
-		return null;
+		$parentNodeId = $this->fallbackParentNodeId;
+		
+		// Accept given parent node ID from command line
+		if( isset( $this->parameters['parentID'] ) && (int) $this->parameters[ 'parentID' ] )
+		{
+			$parentNodeId = $this->parameters[ 'parentID' ];
+		}
+		
+		return eZContentObjectTreeNode::fetch( $parentNodeId );
 	}
 }
-
-?>

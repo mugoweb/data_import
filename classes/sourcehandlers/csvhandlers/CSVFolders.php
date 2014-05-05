@@ -60,11 +60,11 @@ class CSVFolders extends csvHandler
 	
 	
 	/* (non-PHPdoc)
-	 * @see SourceHandler::getParentRemoteNodeId()
+	 * @see SourceHandler::getParentNode()
 	 */
-	public function getParentRemoteNodeId()
+	public function getParentNode()
 	{
-		return self::REMOTE_IDENTIFIER . $this->row[1];
+		return eZContentObjectTreeNode::fetchByRemoteID( self::REMOTE_IDENTIFIER . $this->row[1] );
 	}
 		
 	/* (non-PHPdoc)
