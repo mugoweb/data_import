@@ -33,7 +33,7 @@ class XmlTextParser
 		
 		
 		// remove unsupported tags
-		$html = strip_tags( $html, '<p><a><i><em><h><br><h1><h2><h3><h4><h5><h6><anchor><strong><literal><li><ul><ol><th><td><tr><table><embed>' );
+		$html = strip_tags( $html, '<p><a><i><em><b><br><h1><h2><h3><h4><h5><h6><anchor><strong><literal><li><ul><ol><th><td><tr><table><embed>' );
 		
 		$parser = new eZSimplifiedXMLInputParser( null );
 		$document = $parser->process( $html );
