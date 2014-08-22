@@ -130,15 +130,18 @@ class ImportOperator
 			
 			while( $this->source_handler->getNextField() )
 			{
-				$contentObjectAttribute = $dataMap[ $this->source_handler->geteZAttributeIdentifierFromField() ];
+				$attributeIdentifier = $this->source_handler->geteZAttributeIdentifierFromField();
 				
-				if( $contentObjectAttribute )
+				if( $attributeIdentifier )
 				{
-					$this->save_eZ_attribute( $contentObjectAttribute );
-				}
-				else
-				{
-					$this->cli->output( $this->cli->stylize( 'red', 'Skipping unkown attribute ('.$this->source_handler->geteZAttributeIdentifierFromField().'), ' ), false );
+					if( isset( $dataMap[ $attributeIdentifier ] ) )
+					{
+						$this->save_eZ_attribute( $dataMap[ $attributeIdentifier ] );
+					}
+					else
+					{
+						$this->cli->output( $this->cli->stylize( 'red', 'Skipping unknown attribute ('.$attributeIdentifier.'), ' ), false );
+					}
 				}
 			}
 			

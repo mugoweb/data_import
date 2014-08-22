@@ -94,7 +94,7 @@ class XMLFolders extends XmlHandlerPHP
 	/* (non-PHPdoc)
 	 * @see SourceHandler::getParentNode()
 	 */
-	public function getParentNoded()
+	public function getParentNode()
 	{
 		$id = self::REMOTE_IDENTIFIER . $this->current_row->getAttribute( 'parent_id' );
 		return eZContentObjectTreeNode::fetchByRemoteID( $id );
