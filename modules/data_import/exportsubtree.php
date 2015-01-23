@@ -19,5 +19,3 @@ if( !$output )
 
 echo $output;
 eZExecution::cleanExit();
-
-?>
