@@ -7,7 +7,9 @@ $Module = array( 'name' => 'Data Import Module' );
 $ViewList = array();
 
 $ViewList[ 'search_remote_id' ] = array(
-		'script' => 'remote_id_search.php',
+	'functions' => array( 'search_remote_id' ),
+	'script' => 'remote_id_search.php',
+	'params' => array( 'remote_id' ),
 );
 
 $ViewList[ 'exportobject' ] = array(
@@ -30,3 +32,4 @@ $ViewList[ 'file_upload' ] = array(
 $FunctionList = array();
 $FunctionList[ 'file_upload' ] = array();
 $FunctionList[ 'export' ] = array();
+$FunctionList[ 'search_remote_id' ] = array();

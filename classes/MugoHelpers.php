@@ -25,7 +25,7 @@ class MugoHelpers
 			$db = eZDB::instance();
 			$db->begin();
 			
-			$ez_obj      = self::createEzObject( null, $content_class_identifier, $parent_node_id );
+			$ez_obj      = self::createContentObjectNode( null, $content_class_identifier, $parent_node_id );
 			$obj_version = $ez_obj->currentVersion();
 			$data_map    = $obj_version->attribute( 'data_map' );
 			
@@ -33,11 +33,38 @@ class MugoHelpers
 			{
 				if( $data_map[ $key ] instanceof eZContentObjectAttribute )
 				{
-					$data_map[ $key ]->fromString( $value );
-					$data_map[ $key ]->store();
+					switch( $data_map[ $key ]->attribute( 'data_type_string' ) )
+					{
+						case 'ezimage':
+						{
+							$parts = explode( '|', $value );
+							$file = isset( $parts[0] ) ? $parts[0] : null;
+							$alt = isset( $parts[1] ) ? $parts[1] : '';
+							$orgFileName = isset( $parts[2] ) ? $parts[2] : false;
+
+							if( $file )
+							{
+								$content = $data_map[ $key ]->attribute( 'content' );
+
+								$content->initializeFromFile( $file, $alt, $orgFileName );
+								if( $alt )
+								{
+									$content->setAttribute( 'alternative_text', $alt );
+								}
+							}
+							$content->store( $data_map[ $key ] );
+						}
+						break;
+
+						default:
+						{
+							$data_map[ $key ]->fromString( $value );
+							$data_map[ $key ]->store();
+						}
+					}
 				}
 			}
-		
+
 			eZOperationHandler::execute(
 			                            'content',
 			                            'publish',
@@ -253,5 +280,3 @@ class MugoHelpers
 		return true;
 	}
 }
-
-?>

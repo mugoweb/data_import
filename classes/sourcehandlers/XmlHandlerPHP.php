@@ -93,7 +93,7 @@ class XmlHandlerPHP extends SourceHandler
 		return $node;
 	}
 	
-	function parse_xml_document( $file, $start_xml_tag )
+	protected function parse_xml_document( $file, $start_xml_tag )
 	{
 		$inXML = file_get_contents( $file );
 
@@ -160,4 +160,3 @@ class XmlHandlerPHP extends SourceHandler
 		
 }
 
-?>

@@ -1,3 +1,6 @@
+2.1
+- progress indicator
+
 2.0
 - new eZXML output format to export existing content nodes
 - new source handler that handles eZXML sources

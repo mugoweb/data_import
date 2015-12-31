@@ -25,13 +25,10 @@ class NoNewVersion extends ImportOperator
 		return true;
 	}
 
-	/* (non-PHPdoc)
-	 * @see ImportOperator::create_eZ_object()
-	 */
-	protected function create_eZ_object( $targetContentClass, $targetLanguage = null )
+	protected function create_eZ_object( $remoteId, $targetLanguage = null )
 	{
 		$this->do_publish = true;
-		return parent::create_eZ_object( $targetContentClass, $targetLanguage );
+		return parent::create_eZ_object( $remoteId, $targetLanguage );
 	}
 	
 	/* (non-PHPdoc)
@@ -55,5 +52,3 @@ class NoNewVersion extends ImportOperator
 	}
 	
 }
-
-?>

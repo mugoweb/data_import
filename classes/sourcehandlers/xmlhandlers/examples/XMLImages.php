@@ -12,19 +12,7 @@ class XMLImages extends XmlHandlerPHP
 
 	const REMOTE_IDENTIFIER = 'xmlimage_';	
 
-	function Images()
-	{}
 
-	function writeLog( $message, $newlogfile = '')
-	{
-		if($newlogfile)
-			$logfile = $newlogfile;
-		else
-			$logfile = $this->logfile;
-		
-		$this->logger->write( self::REMOTE_IDENTIFIER.$this->current_row->getAttribute('id').': '.$message , $logfile );
-	}
-	
 	// mapping for xml field name and attribute name in ez publish
 	function geteZAttributeIdentifierFromField()
 	{
@@ -55,7 +43,7 @@ class XMLImages extends XmlHandlerPHP
 				else
 				{
 					if( strlen($this->current_field->nodeValue) > 0 )
-						$this->writeLog( 'Could not find image: '.$file, 'import_images.log' );
+						$this->log( 'Could not find image: '.$file );
 					
 					return false;
 				}
@@ -101,5 +89,3 @@ class XMLImages extends XmlHandlerPHP
 	}
 
 }
-
-?>

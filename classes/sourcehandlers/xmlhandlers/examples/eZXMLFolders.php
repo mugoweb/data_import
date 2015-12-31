@@ -10,5 +10,3 @@ class eZXMLFolders extends eZXMLHandlerPHP
 		return $this->parse_xml_document( 'extension/data_import/dataSource/examples/folder_structure.ezxml', 'all' );
 	}
 }
-
-?>

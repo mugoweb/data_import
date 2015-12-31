@@ -2,103 +2,105 @@
 
 class csvHandler extends SourceHandler
 {
-	var $handlerTitle = 'Comma-Separated-Value Handler';
-	var $source_file = 'some.csv';
-	var $delimiter = ',';
-	var $enclosure = '"';
-	var $ignore_first_row = true;
+	public $handlerTitle = 'Comma-Separated-Value Handler';
+	public $source_file = 'some.csv';
+	public $delimiter = ',';
+	public $enclosure = '"';
+	public $ignore_first_row = true;
 	
-	// mapping is the key for this script
-	// it maps a col number to an eZ Attribute
-	// starts with 0
-	var $mapping = array( 0 => 'title',
-	                      3 => 'body' );
+	/**
+	 * mapping is the key for this script
+	 * it maps a col number to an eZ Attribute
+	 * zero based index
+	 *
+	 * @var array
+	 */
+	protected $mapping = array(
+		0 => 'title',
+		3 => 'body'
+	);
 
-	function csvHandler()
-	{}
+	protected $arrayPointer = -1;
 
-	/*
+	/**
 	 * init the data, read from file, etc.
 	 */
-	function readData()
+	public function readData()
 	{
 		if( !file_exists( $this->source_file ) )
 		{
 			die( "Can not proceed: Can not locate data file: '" . $this->source_file . "'" );
 		}
-		$this->m_aData = fopen( $this->source_file , 'r');
+
+		$this->data = fopen( $this->source_file , 'r' );
+
+		return true;
 	}
 
-	/*
-	 * the ezp target-class identifier
-	 */
-	function getTargetContentClass()
-	{
-		return 'a_valid_class_identifier';
-	}
-
-	/*
-	 * return eternal index of data row
-	 */
-	function getDataRowId()
-	{
-		return 'prefix_'.'id';
-	}
-
-	/*
+	/**
 	 * use the file handler to navigate in the CSV file
 	 */
-	function getNextRow()
+	public function getNextRow()
 	{
 		$this->node_priority = false;
 		
-		// set mapping array
-		$this->first_field = true;
+		// start from the beginning
 		reset( $this->mapping );
+		$this->arrayPointer = -1;
 
 		if( $this->ignore_first_row )
 		{
 			$this->ignore_first_row = false;
-			fgetcsv( $this->m_aData , 100000, $this->delimiter, $this->enclosure ); // nirvana
+			fgetcsv( $this->data , 100000, $this->delimiter, $this->enclosure ); // nirvana
 		}
 
-		$this->row = fgetcsv( $this->m_aData , 100000, $this->delimiter, $this->enclosure);
+		$this->current_row = fgetcsv(
+			$this->data,
+			100000,
+			$this->delimiter,
+			$this->enclosure
+		);
 
-		return $this->row;
+		return $this->current_row;
 	}
 
-	/*
-	 * use php array pointers
+	/**
+	 * use php array pointers -- to bad there is not way
+	 * to get the current pointer position
+	 *
+	 * @return string
 	 */
-	function getNextField()
+	public function getNextField()
 	{
-		if( $this->first_field )
+		$this->arrayPointer++;
+
+		if( $this->arrayPointer )
 		{
-			$this->first_field = false;
+			return next( $this->mapping );
 		}
 		else
 		{
-			next( $this->mapping ); // nirvana
+			return current( $this->mapping );
 		}
-		
-		return current( $this->mapping );
 	}
 
-	/*
-	 * return the content-class attribute-name
+	/**
+	 * returns the content-class attribute-name
+	 *
+	 * @return string
 	 */
 	function geteZAttributeIdentifierFromField()
 	{
 		return current( $this->mapping );
 	}
 
-	/* (non-PHPdoc)
-	 * @see SourceHandler::getValueFromField()
+	/**
+	 * @param eZContentObjectAttribute $contentObjectAttribute
+	 * @return mixed
 	 */
 	public function getValueFromField( eZContentObjectAttribute $contentObjectAttribute )
 	{
-		return $this->row[ key( $this->mapping ) ];
+		return $this->current_row[ key( $this->mapping ) ];
 	}
 
 }
-?>

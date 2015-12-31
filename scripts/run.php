@@ -6,9 +6,9 @@
 
 require 'autoload.php';
 
-if ( file_exists( "config.php" ) )
+if ( file_exists( 'config.php' ) )
 {
-    require "config.php";
+    require 'config.php';
 }
 
 $params = new ezcConsoleInput();

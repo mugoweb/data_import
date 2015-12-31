@@ -6,36 +6,96 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 	 * @var string
 	 */
 	public $handlerTitle = 'ezxml Handler';
-	
+
+	protected $fieldList;
+	protected $rowList;
+	protected $fieldPointer = -1;
+	protected $rowPointer = -1;
+
+	protected $rowCount;
+
 	/**
 	 * Used to temporarily store image data
 	 * 
 	 * @var array
 	 */
 	protected $tmpFiles;
-		
-	/* (non-PHPdoc)
-	 * @see XmlHandlerPHP::getNextField()
+
+
+	/**
+	 *
+	 * @return bool
 	 */
-	public function getNextField()
+	public function getNextRow()
 	{
-		if( $this->first_field )
+		// reset field pointer
+		$this->fieldPointer = -1;
+		$this->fieldList = null;
+
+		$this->rowPointer++;
+
+		$row = $this->getRowList()->item( $this->rowPointer );
+
+		if( $row )
 		{
-			$this->first_field = false;
-			//TODO: probably likely to break to go by index 3
-			$this->current_field = $this->current_row->childNodes->item(3)->firstChild;
+			$this->current_row = $row;
+			return true;
 		}
 		else
 		{
-			$this->current_field = $this->current_field->nextSibling;
+			return false;
 		}
-	
-		if( is_object( $this->current_field ) && $this->current_field->nodeType != 1 ) //ignore xml #text nodes
+	}
+
+	protected function getRowList()
+	{
+		if( ! $this->rowList )
 		{
-			$this->current_field = $this->getNextValidNode( $this->current_field );
+			$xpath = new DOMXPath( $this->data->ownerDocument );
+
+			$result = $xpath->query( '/all/o' );
+
+			if( $result->length )
+			{
+				$this->rowList = $result;
+			}
 		}
-	
-		return $this->current_field;
+
+		return $this->rowList;
+	}
+
+	public function getNextField()
+	{
+		$this->fieldPointer++;
+
+		$field = $this->getFieldList()->item( $this->fieldPointer );
+
+		if( $field )
+		{
+			$this->current_field = $field;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	protected function getFieldList()
+	{
+		if( ! $this->fieldList )
+		{
+			$xpath = new DOMXPath( $this->current_row->ownerDocument );
+
+			$result = $xpath->query( 'as/a', $this->current_row );
+
+			if( $result->length )
+			{
+				$this->fieldList = $result;
+			}
+		}
+
+		return $this->fieldList;
 	}
 	
 	/* (non-PHPdoc)
@@ -57,11 +117,11 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 			case 'ezxmltext':
 			{
 				$value = $this->current_field->ownerDocument->saveXML( $this->current_field );
-				
+
 				// cut out surrounding <a> tag
 				$value = preg_replace( '/<a .*?>/', '', $value );
 				$value = preg_replace( '/<\/a>/', '', $value );
-				
+
 				return $value;
 			}
 			break;
@@ -71,12 +131,12 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 			{
 				$parts = explode( '|', str_replace( '&amp;', '&', $this->current_field->nodeValue ) );
 				$filename = $parts[ 0 ];
-				
+
 				if( $filename )
 				{
 					$filename = $this->copyRemoteFileToLocalTemp( $filename );
 				}
-				
+
 				return $filename . '|' . $parts[ 1 ];
 			}
 			break;
@@ -87,17 +147,15 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 			}
 		}
 	}
-	
-	public function getDomNodes()
-	{
-		$return = array();
-		
-		foreach( $this->current_row->childNodes->item(1)->childNodes as $node_assignment )
-		{
-			$return[] = $node_assignment;
-		}
 
-		return $return;
+	/**
+	 * @return DOMNodeList
+	 */
+	public function getNodeAssignments()
+	{
+		$xpath = new DOMXPath( $this->data->ownerDocument );
+
+		return $xpath->query( 'ns/n', $this->current_row );
 	}
 
 	/* (non-PHPdoc)
@@ -122,6 +180,7 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 	public function readData()
 	{
 		// you need to implement it in a child class
+		return true;
 	}
 
 	/**
@@ -145,13 +204,14 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 
 		if( curl_errno( $ch ) )
 		{
-			//log error
+			$this->log( 'Download failed: ' . $uri );
 		}
 
 		curl_close( $ch );
 
 		if( $info[ 'http_code' ] != '200' )
 		{
+			$this->log( 'Download failed - does not exists: ' . $uri );
 			$content = null;
 		}
 
@@ -165,7 +225,7 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 
 			// store reference to remove the file later
 			$this->tmpFiles[] = $return;
-			
+
 			file_put_contents( $return, $content );
 		}
 
@@ -185,5 +245,16 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 		$force_quit = false;
 		return true;
 	}
-	
+
+	public function getRowCount()
+	{
+		if( !isset( $this->rowCount ) )
+		{
+			$xpath = new DOMXPath( $this->data->ownerDocument );
+			$this->rowCount = $xpath->query( '/all/o' )->length;
+
+		}
+
+		return $this->rowCount;
+	}
 }

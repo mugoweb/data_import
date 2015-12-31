@@ -12,15 +12,15 @@ when a parsing failed.
 
 A working example is in XMLFolders.php:
 
-	$xml_text_parser = new XmlTextParser();
-	$xmltext = $xml_text_parser->Html2XmlText( '<p>My text here</p>' );
+	$xml_text_parser = new Html2XmlText();
+	$xmltext = $xml_text_parser->execute( '<p>My text here</p>' );
 
 So all you need to do is to get an instance of XmlTextParser. The class
 is under data_import/classes/Html2XmlText.php.
 
 In case the parsing failed you can read the error messages like that:
 
-print_r( $xml_text_parser->get_error_messages() );
+print_r( $xml_text_parser->getErrorMessages() );
 
 If the PHP tidy extension is installed the parser will use it and will
 greatly improve the success rate of parsing a given HTML text.

@@ -46,7 +46,7 @@ class MySQLHandler extends SourceHandler
     /*
      * init the data, read from file, etc.
      */
-    function readData()
+    public function readData()
     {
         $this->current_row = false;
         $this->current_row_hash = false;
@@ -60,8 +60,10 @@ class MySQLHandler extends SourceHandler
         if ( mysqli_connect_errno() )
         {
             printf( "Connect failed: %s\n", mysqli_connect_error() );
-            exit();
+			return false;
         }
+
+		return true;
     }
 
     /*

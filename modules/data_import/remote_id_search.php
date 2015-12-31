@@ -1,20 +1,23 @@
 <?php 
 
-$module = $Params['Module'];
+$module = $Params[ 'Module' ];
 $http = eZHTTPTool::instance();
 
-$remote_id = $_REQUEST[ 'remote_id' ];
+$remote_id = $_REQUEST[ 'remote_id' ] ? $_REQUEST[ 'remote_id' ] : $Params[ 'remote_id' ];
 
 if( $remote_id )
 {
-	$obj = eZContentObject::fetchByRemoteID( $remote_id );
+	$ezObj = eZContentObject::fetchByRemoteID( $remote_id );
 	
-	if( is_object( $obj ) )
+	if( $ezObj instanceof eZContentObject )
 	{
-		$module->redirect( 'content', 'view', array( 'full',  $obj->attribute( 'main_node_id' ) ) );
+		$mainNode = $ezObj->attribute( 'main_node' );
+
+		if( $mainNode instanceof eZContentObjectTreeNode )
+		{
+			$module->redirectTo( $mainNode->attribute( 'url_alias' ) );
+		}
 	}
 }
 
-$Result[ 'content' ] = '<h1>Could not find given remote ID</h1><b>Remote ID:</b> "' . $remote_id. '"'; // <br /> <a href="' . $http->sessionVariable( "LastAccessedModifyingURI" ) . '">Back</a>'; 
-
-?>
+$Result[ 'content' ] = '<h1>Lookup remote ID</h1><form><label>Remote ID:</label><input name="remote_id" value="' . $remote_id. '" /></form>'; // <br /> <a href="' . $http->sessionVariable( "LastAccessedModifyingURI" ) . '">Back</a>';

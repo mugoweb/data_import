@@ -9,14 +9,25 @@ class SourceHandler
 	public $data;
 	public $current_row;
 	public $current_field;
+
 	public $idPrepend = 'remoteID_';
 	/**
 	 * @var string
 	 */
 	public $handlerTitle = 'Abstract Handler';
+
+	/**
+	 * @var
+	 */
 	protected $parameters;
-	
-	public $logger = false;
+
+	/**
+	 * Name of file; is located in var/log
+	 *
+	 * @var string
+	 */
+	protected $logFile = 'data_import.log';
+
 	public $db;
 	public $node_priority = false;
 		
@@ -100,6 +111,8 @@ class SourceHandler
 	}
 
 	/**
+	 * the ezp target-class identifier
+	 *
 	 * @return string
 	 */
 	public function getTargetContentClass()
@@ -122,7 +135,7 @@ class SourceHandler
 	 * Can be an xml file, csv file or queries to a remote DB
 	 * Sets object var "data"
 	 */
-	function readData()
+	public function readData()
 	{
 		$this->data = null;
 	}
@@ -134,7 +147,7 @@ class SourceHandler
 	 * @param boolean $force_exit
 	 * @return boolean
 	 */
-	function post_save_handling( &$force_exit )
+	public function post_save_handling( &$force_exit )
 	{
 		$force_quit = false;
 		return true;
@@ -146,23 +159,23 @@ class SourceHandler
 	 * @param boolean $force_exit
 	 * @return boolean
 	 */
-	function post_publish_handling( &$force_exit )
+	public function post_publish_handling( &$force_exit )
 	{
 		$force_quit = false;
 		return true;
 	}
 
 	
-	function updatePublished( $eZ_object )
+	public function updatePublished( $eZ_object )
 	{
 		return false;
 	}
 	
 	/**
 	 * Returns an array of eZContentObject attribute values like
-	 * publish_data, owner etc
+	 * publish_date, owner etc
 	 * 
-	 * @return multitype:
+	 * @return array
 	 */
 	public function getEzObjAttributes()
 	{
@@ -170,9 +183,9 @@ class SourceHandler
 	}
 	
 	/**
-	 * Returns an array of ez publish object state ids.
+	 * Returns an array of ez publish object state ids -- it's an array of integers.
 	 * 
-	 * @return multitype:
+	 * @return array()
 	 */
 	public function getStateIds()
 	{
@@ -181,10 +194,11 @@ class SourceHandler
 	
 	/**
 	 * Override this method and return an array of node details as DOMElements
+	 * TODO: review the return value
 	 * 
-	 * @return multitype:DOMElement 
+	 * @return DOMNodeList
 	 */
-	public function getDomNodes()
+	public function getNodeAssignments()
 	{
 		$parent_node = $this->getParentNode();
 		
@@ -195,12 +209,12 @@ class SourceHandler
 		}
 
 		// Create DomNode
-		$xml = '<node-assignment is-main-node="1" remote-id="'. $this->getDataRowId() .'" parent-node-remote-id="'. $parent_node->attribute( 'remote_id' ) .'" />';
+		$xml = '<n is-main-node="1" remote-id="'. $this->getDataRowId() .'" parent-node-remote-id="'. $parent_node->attribute( 'remote_id' ) .'" />';
 
 		$dom = new DOMDocument( '1.0', 'utf-8' );
 		$dom->loadXML( $xml );
 
-		return array( $dom->firstChild );
+		return $dom->childNodes;
 	}
 	
 	
@@ -215,11 +229,27 @@ class SourceHandler
 		$parentNodeId = $this->fallbackParentNodeId;
 		
 		// Accept given parent node ID from command line
-		if( isset( $this->parameters['parentID'] ) && (int) $this->parameters[ 'parentID' ] )
+		if( isset( $this->parameters[ 'parentID' ] ) && (int) $this->parameters[ 'parentID' ] )
 		{
 			$parentNodeId = $this->parameters[ 'parentID' ];
 		}
 		
 		return eZContentObjectTreeNode::fetch( $parentNodeId );
+	}
+
+	protected function log( $message, $lineBreak = true, $file = null )
+	{
+		$file = $file ? $file : $this->logFile;
+		$message = $lineBreak ? $message . "\n" : $message;
+
+		error_log( $message, 3, 'var/log/' . $file );
+	}
+
+	/*
+	 * Implement this function if you want to get progress info in the output
+	 */
+	public function getRowCount()
+	{
+		return false;
 	}
 }

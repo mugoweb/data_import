@@ -1,69 +1,121 @@
 <?php
 
-class XmlTextParser
+class Html2XmlText
 {
-	
-	private $error_messages;
-	
-	function __construct()
-	{}
-	
-	// Use eZ Publish parser to translate a given HMTL to XMLTEXT syntax
-	function Html2XmlText( $html )
+	protected $error_messages;
+
+	/**
+	 * Use eZ Publish parser to translate a given HMTL to XMLTEXT syntax
+	 *
+	 * @param string $html
+	 * @return string
+	 */
+	public function execute( $html )
 	{
-		$return = null;
+		// Reset error messages
 		$this->error_messages = null;
-		
-		// clean up given input
-		if ( extension_loaded( 'tidy' ) )
+
+		$html = $this->cleanUp( $html );
+
+		if( $html !== false )
 		{
-			$tidy = new tidy();
-			$config = array( 'doctype' => 'omit',
-			                 'show-body-only' => true,
-			                 'wrap' => false,
-			                 'new-inline-tags' => 'anchor,literal,dm_link,inline_image'
-			);
+			$html = $this->simplify( $html );
 
-			$tidy->parseString( $html, $config, 'utf8');
-			$tidy->cleanRepair();
+			if( $html !== false )
+			{
+				// Parse resulting HTML with ezp parser
+				$parser = new eZSimplifiedXMLInputParser( null );
+				$document = $parser->process( $html );
 
-			$html = tidy_get_output( $tidy );
+				// Handle errors
+				if( $document !== false )
+				{
+					return $document->saveXML();
+				}
+				else
+				{
+					$fullMessage = 'eZSimplifiedXMLInputParser: ';
+
+					foreach( $parser->getMessages() as $message )
+					{
+						$fullMessage .= $message;
+					}
+
+					$this->error_messages[] = $fullMessage;
+				}
+			}
 		}
 
-		
-		
-		// remove unsupported tags
-		$html = strip_tags( $html, '<p><a><i><em><b><br><h1><h2><h3><h4><h5><h6><anchor><strong><literal><li><ul><ol><th><td><tr><table><embed>' );
-		
-		$parser = new eZSimplifiedXMLInputParser( null );
-		$document = $parser->process( $html );
+		// Either cleanUpHtml failed or ezp parser failed
+		$return = '<?xml version="1.0" encoding="utf-8"?>'. "\n" .'<section xmlns:image="http://ez.no/namespaces/ezpublish3/image/" xmlns:xhtml="http://ez.no/namespaces/ezpublish3/xhtml/" xmlns:custom="http://ez.no/namespaces/ezpublish3/custom/"><paragraph xmlns:tmp="http://ez.no/namespaces/ezpublish3/temporary/"><literal class="html">'. htmlspecialchars( $html, ENT_XML1 ) .'</literal></paragraph></section>';
 
-		# Handle errors
-		if( $document === false )
-		{
-			$this->error_messages = $parser->getMessages();
-
-			$return = false;
-		}
-		else
-		{
-			// Dom 2 XML string
-			$return = eZXMLTextType::domString( $document );
-		}
-		
 		return $return;
 	}
 
-	function get_error_messages()
+	/**
+	 * Return false if it fails to clean up the given HTML
+	 *
+	 * @param $html
+	 * @return bool|string
+	 */
+	protected function cleanUp( $html )
+	{
+		// Not fully implemented
+		return $html;
+
+		// Parse given HTML with DOMDocument::loadHTML
+		libxml_use_internal_errors( true );
+
+		$doc = new DOMDocument();
+		$doc->loadHTML( $html );
+
+		$errors = libxml_get_errors();
+
+		libxml_clear_errors();
+		libxml_use_internal_errors( false );
+
+		if( empty( $errors ) )
+		{
+			// Get html in body tag from parsed loadHtml doc
+			$xpath = new DOMXPath( $doc );
+			$bodyNode = $xpath->query( '//body/' )->item(0);
+
+			var_dump( $doc->saveXML( $bodyNode ) );
+			die('contains body tag :(');
+
+		}
+		else
+		{
+			foreach( $errors as $error)
+			{
+				$this->error_messages[] =
+					trim( $error->message ) . ' in line ' .
+					$error->line . ' column ' .
+					$error->column;
+			}
+		}
+
+		// remove unsupported tags
+
+		return $html;
+	}
+
+	/**
+	 * ezoe cannot handle all HTML tags
+	 *
+	 * @param string $html
+	 * @return string|boolean
+	 */
+	protected function simplify( $html )
+	{
+		return $html;
+
+		//return strip_tags( $html, '<p><a><i><em><b><br><h1><h2><h3><h4><h5><h6><strong><li><ul><ol>' );
+	}
+
+	public function getErrorMessages()
 	{
 		return $this->error_messages;
 	}
 
 }
-
-/*
- * 			//reset parser and write an error message in the xml text field
-
-
- */
-?>

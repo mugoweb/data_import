@@ -1,24 +1,16 @@
 <?php
 
+/**
+ * Class XMLFolders
+ */
 class XMLFolders extends XmlHandlerPHP
 {
 	public $handlerTitle = 'Folders Handler';
 	public $current_loc_info = array();
 	public $logfile = 'folders_import.log';
 	public $remoteID = '';
+	public $idPrepend = 'xmlfolder_';
 
-	const REMOTE_IDENTIFIER = 'xmlfolder_';	
-
-	function writeLog( $message, $newlogfile = '')
-	{
-		if($newlogfile)
-			$logfile = $newlogfile;
-		else
-			$logfile = $this->logfile;
-		
-		$this->logger->write( self::REMOTE_IDENTIFIER.$this->current_row->getAttribute('id').': '.$message , $logfile );
-	}
-	
 	/* (non-PHPdoc)
 	 * @see XmlHandlerPHP::geteZAttributeIdentifierFromField()
 	 */
@@ -47,7 +39,7 @@ class XMLFolders extends XmlHandlerPHP
 	 */
 	public function getValueFromField( eZContentObjectAttribute $contentObjectAttribute )
 	{
-		switch( $this->current_field->getAttribute('name') )
+		switch( $this->current_field->getAttribute( 'name' ) )
 		{
 			case 'publishdate':
 			{
@@ -69,7 +61,7 @@ class XMLFolders extends XmlHandlerPHP
 			case 'description':
 			{
 				$xml_text_parser = new XmlTextParser();
-				$xmltext = $xml_text_parser->Html2XmlText( $this->current_field->nodeValue );
+				$xmltext = $xml_text_parser->execute( $this->current_field->nodeValue );
 
 				if($xmltext !== false)
 				{
@@ -96,13 +88,13 @@ class XMLFolders extends XmlHandlerPHP
 	 */
 	public function getParentNode()
 	{
-		$id = self::REMOTE_IDENTIFIER . $this->current_row->getAttribute( 'parent_id' );
+		$id = $this->idPrepend . $this->current_row->getAttribute( 'parent_id' );
 		return eZContentObjectTreeNode::fetchByRemoteID( $id );
 	}
 
 	public function getDataRowId()
 	{
-		return self::REMOTE_IDENTIFIER . $this->current_row->getAttribute('id');
+		return $this->idPrepend . $this->current_row->getAttribute('id');
 	}
 
 	public function getTargetContentClass()
@@ -116,5 +108,3 @@ class XMLFolders extends XmlHandlerPHP
 	}
 
 }
-
-?>
