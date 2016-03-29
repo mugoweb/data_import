@@ -400,7 +400,7 @@ class ImportOperator
 
 				$value = $this->source_handler->getValueFromField( $contentObjectAttribute );
 			}
-				break;
+			break;
 
 			case 'ezobjectrelationlist':
 			{
@@ -420,22 +420,36 @@ class ImportOperator
 
 				$value = $this->source_handler->getValueFromField( $contentObjectAttribute );
 			}
-				break;
+			break;
 
+			// fix limitations in the kernel fromstring function
 			// fromString cannot handle an empty string - it's not removing the image
+			// you can add the filename as a third element in the string
 			case 'ezimage':
 			{
 				$value = $this->source_handler->getValueFromField( $contentObjectAttribute );
 				$parts = explode( '|', $value );
 
-				// empty filename - let's remove it and we're done
-				if( !$parts[ 0 ] )
+				$path = isset( $parts[ 0 ] ) ? $parts[ 0 ] : false;
+				$alt = isset( $parts[ 1 ] ) ? $parts[ 1 ] : false;
+				$name = isset( $parts[ 2 ] ) ? $parts[ 2 ] : false;
+
+				// empty filename - let's remove it
+				if( !$path )
 				{
 					eZImageType::deleteStoredObjectAttribute( $contentObjectAttribute, true );
-					return true;
 				}
+				else
+				{
+					$content = $contentObjectAttribute->attribute( 'content' );
+					$content->initializeFromFile( $path, $alt, $name );
+					$content->store( $contentObjectAttribute );
+				}
+
+				// we're done - no need to call fromString
+				return true;
 			}
-				break;
+			break;
 
 			default:
 				$value = $this->source_handler->getValueFromField( $contentObjectAttribute );

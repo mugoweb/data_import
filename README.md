@@ -3,7 +3,7 @@ Data import extension for eZPublish
 
 Extension : data_import
 Requires  : eZ Publish 4.x.x
-Authors   : Marius Eliassen (me[_at_]ez.no),
+Authors   : Marius Eliassen
             Philipp Kamps (pkamps[_at_].mugo.ca)
 
 Summary   :
