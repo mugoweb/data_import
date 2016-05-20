@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<all>
+	<o id="article_10" class="article">
+		<ns>
+			<n is-main-node="1" parent-node-remote-id="f3e90596361e31d496d4026eb624c983" name="Mugo" node-id="260" remote-id="ezxmlfolder_10" sort-field="path" sort-order="1" priority="0"/>
+		</ns>
+		<as>
+			<a id="title" type="ezstring">MugoWeb</a>
+
+			<a id="body" type="ezxmltext"><![CDATA[
+				<h2>We will understand and implement your workflow</h2>
+				<p>Our clients trust us to look beyond the spec-sheet and offer true insights on their projects.</p>
+				<a href="http://www.mugo.ca/Portfolio">More on what we've done</a>]]>
+			</a>
+		</as>
+	</o>
+</all>

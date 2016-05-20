@@ -451,6 +451,31 @@ class ImportOperator
 			}
 			break;
 
+			case 'ezxmltext':
+			{
+				$value = $this->source_handler->getValueFromField( $contentObjectAttribute );
+
+				$xmlTextDoc = new DOMDocument( '1.0', 'utf-8' );
+				if ( $xmlTextDoc->loadXML( $value ) )
+				{
+					$xpath = new DOMXPath( $xmlTextDoc );
+
+					$externalLinks = $xpath->query( '//link[@url_id]' );
+
+					if( !empty( $externalLinks ) )
+					{
+						$linkIds = array();
+						foreach( $externalLinks as $externalLink )
+						{
+							$linkIds[] = $externalLink->getAttribute( 'url_id' );
+						}
+
+						eZSimplifiedXMLInput::updateUrlObjectLinks( $contentObjectAttribute, $linkIds );
+					}
+				}
+			}
+			break;
+
 			default:
 				$value = $this->source_handler->getValueFromField( $contentObjectAttribute );
 		}

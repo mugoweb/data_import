@@ -111,7 +111,6 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 	 */
 	public function getValueFromField( eZContentObjectAttribute $contentObjectAttribute )
 	{
-
 		switch( $this->current_field->getAttribute( 'type' ) )
 		{
 			case 'ezxmltext':
@@ -198,6 +197,9 @@ class eZXMLHandlerPHP extends XmlHandlerPHP
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0 );
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 120 );
+		curl_setopt($ch, CURLOPT_TIMEOUT, 300 );
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1 );
 
 		$content = curl_exec( $ch );
 		$info	= curl_getinfo( $ch );

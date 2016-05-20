@@ -1,7 +1,13 @@
 <?php
 
-class Html2XmlTextTidy extends Html2XmlText
+class Html2XmlTextDefault extends Html2XmlText
 {
+	/** @var string */
+	protected $xslFile = 'extension/data_import/xslt/ezoe.xsl';
+
+	/** @var  array */
+	static protected $xsltErrors;
+
 	/**
 	 * Return false if it fails to clean up the given HTML
 	 *
@@ -33,5 +39,33 @@ class Html2XmlTextTidy extends Html2XmlText
 		}
 
 		return $html;
+	}
+
+	protected function simplify( $html )
+	{
+		// needs static context to store errors
+		self::$xsltErrors = array();
+
+		$xmlDoc = new DOMDocument();
+		$xmlDoc->loadHTML( $html );
+
+		$xslDoc = new DOMDocument();
+		$xslDoc->load( $this->xslFile );
+
+		$xsl = new XSLTProcessor();
+		$xsl->registerPHPFunctions();
+		$xsl->importStyleSheet( $xslDoc );
+
+		$result = $xsl->transformToXML( $xmlDoc );
+
+		// append xslt error messages
+		$this->error_messages = array_merge( $this->error_messages, self::$xsltErrors );
+
+		return $result;
+	}
+
+	public static function xsltLog( $message )
+	{
+		self::$xsltErrors[] = 'XSLT: ' . $message;
 	}
 }

@@ -4,4 +4,15 @@
 #[ActionSettings]
 #ExtensionDirectories[]=data_import
 
+[CustomTagSettings]
+AvailableCustomTags[]=img
+
+[img]
+CustomAttributes[]
+CustomAttributes[]=alt
+CustomAttributes[]=src
+CustomAttributes[]=style
+CustomAttributes[]=height
+CustomAttributes[]=width
+
 */ ?>
