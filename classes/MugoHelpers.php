@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Collection of some usefull functions
+ * Collection of some useful functions
  * 
  * @author pkamps
  */
@@ -25,7 +25,7 @@ class MugoHelpers
 			$db = eZDB::instance();
 			$db->begin();
 			
-			$ez_obj      = self::createContentObjectNode( null, $content_class_identifier, $parent_node_id );
+			$ez_obj      = self::createContentObjectNode( array(), $content_class_identifier, $parent_node_id );
 			$obj_version = $ez_obj->currentVersion();
 			$data_map    = $obj_version->attribute( 'data_map' );
 			
@@ -224,27 +224,30 @@ class MugoHelpers
 	
 	/**
 	 * @param array $attributes
-	 * @param string $class_idenfier
+	 * @param string $class_identifier
 	 * @param int $parent_node_id
 	 * @param array $stateIds
 	 * @return eZContentObject
 	 */
-	public static function createContentObjectNode( array $attributes, $class_idenfier, $parent_node_id, array $stateIds = null )
+	public static function createContentObjectNode( array $attributes, $class_identifier, $parent_node_id, array $stateIds = null )
 	{
-		$eZ_object = self::createContentObject( $attributes, $class_idenfier );
+		$eZ_object = self::createContentObject( $attributes, $class_identifier );
 		
 		if( $eZ_object )
 		{
-			self::updateObjectStates( $eZ_object, $stateIds );
-			
+			if( !empty( $stateIds ) )
+			{
+				self::updateObjectStates( $eZ_object, $stateIds );
+			}
+
 			// Assign object to node
 			$nodeAssignment = eZNodeAssignment::create(
-					array(
-							'contentobject_id'		=> $eZ_object->attribute( 'id' ),
-							'contentobject_version'	=> 1,
-							'parent_node' => $parent_node_id,
-							'is_main' => 1
-					)
+				array(
+						'contentobject_id'		=> $eZ_object->attribute( 'id' ),
+						'contentobject_version'	=> 1,
+						'parent_node' => $parent_node_id,
+						'is_main' => 1
+				)
 			);
 	
 			if( $nodeAssignment )
@@ -268,15 +271,12 @@ class MugoHelpers
 	 */
 	static public function updateObjectStates( eZContentObject $eZObj, array $stateIds )
 	{
-		if( !empty( $stateIds ) )
+		foreach( $stateIds as $id )
 		{
-			foreach( $stateIds as $id )
-			{
-				$state = eZContentObjectState::fetchById( $id );
-				$eZObj->assignState( $state );
-			}
+			$state = eZContentObjectState::fetchById( $id );
+			$eZObj->assignState( $state );
 		}
-		
+
 		return true;
 	}
 }
