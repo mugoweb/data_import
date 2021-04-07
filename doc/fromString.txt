@@ -128,7 +128,7 @@ eztime
 string with the time of the day like HH:MM in 24h format
 
 ezurl
-string containing the url
+string containing the url or url|text
 
 ezuser
 '|' separated string with user login, email, password hash, and password hash type
