@@ -124,7 +124,7 @@ class XmlHandlerPHP extends SourceHandler
 	function XmlLoader( $strXml )
 	{
 	    $dom = new DOMDocument();
-	    $dom->loadXml($strXml);   
+	    $dom->loadXml($strXml, LIBXML_PARSEHUGE);   
 	    return $dom;
 	}
 	
